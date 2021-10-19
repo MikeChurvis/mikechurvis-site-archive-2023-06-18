@@ -1,8 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
-const { title } = Astro.props;
+import Hero from '../components/Hero.astro'
+import Section from '../components/Section.astro'
 ---
 
-<BaseLayout title="Modified Title!">
-	<h1>Modified Heading!</h1>
+<BaseLayout title="Mike Churvis">
+	<div class="container-fluid p-0">
+		<Hero></Hero>
+
+		<Section title="my skills">
+		
+		</Section>
+	</div>
 </BaseLayout>
