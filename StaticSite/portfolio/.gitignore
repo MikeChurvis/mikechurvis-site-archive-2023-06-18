@@ -1,5 +1,5 @@
-# build output
-dist
+# build output (enabled for GitHub Pages)
+# dist
 
 # dependencies
 node_modules/
