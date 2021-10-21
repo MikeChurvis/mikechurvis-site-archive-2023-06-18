@@ -1,6 +1,6 @@
 cd StaticSite/portfolio
 npm run build
-touch dist/.nojekyll
+touch dist/_astro/.nojekyll
 git add -A
 git status
 git commit -m "Deployment Build ($(date))"
