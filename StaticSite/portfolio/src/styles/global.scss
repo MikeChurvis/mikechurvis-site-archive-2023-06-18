@@ -7,6 +7,12 @@ $body-bg: shade-color(white, 10%);
 @import '../../node_modules/bootstrap/scss/root';
 
 
+@include media-breakpoint-up(lg) {
+    .row > .hero-headshot-container {
+        max-width: 25rem;
+    }
+}
+
 @each $color-name, $color in map-merge($theme-colors, $colors) {
     .shadow.shadow-glow-#{$color-name} {
         box-shadow: 0 0 1rem tint-color($color, 50%) !important;

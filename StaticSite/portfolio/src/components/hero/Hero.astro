@@ -1,0 +1,65 @@
+---
+import headshotImg from '../../images/HeadshotTransparencyOffWhite.png';
+import SkillIcon from './SkillIcon.astro';
+---
+
+<div class="
+container-fluid 
+p-3 
+bg-primary
+">
+    <div class="row justify-content-center">
+        <div class="hero-headshot-container">
+            <img class="
+            rounded-circle
+            shadow
+            w-100
+            " 
+            src={ headshotImg } 
+            alt="The bust of Mike Churvis wearing a blue polo and glasses">
+        </div>
+
+        <!-- force line break when screen is narrow -->
+        <div class="w-100 d-block d-lg-none"></div>
+
+        <div class="col-auto mt-3 mt-lg-1">
+            <h1 class="display-1 text-center text-lg-start text-white">Mike Churvis</h1>
+            <h2 class="display-5 py-3 text-center text-lg-start text-white">Full-Stack Web Developer</h2>
+            
+            
+            <div class="row mx-0 justify-content-center justify-content-lg-start position-relative">
+                <SkillIcon logo="django-logo.png">Django</SkillIcon>
+                <SkillIcon logo="vue-logo.png">Vue</SkillIcon>
+                <SkillIcon logo="docker-logo.png">Docker</SkillIcon>
+                <SkillIcon logo="postgresql-logo.png">PostgreSQL</SkillIcon>
+                <SkillIcon>(more)</SkillIcon>
+            </div>
+            <div class="row py-4 justify-content-center justify-content-lg-start">
+                <div class="col-auto align-items-center">
+                    <div class="alert alert-info m-0 shadow shadow-glow-info p-2 d-inline-flex align-items-center">
+                        <span class="text-success fs-4">
+                            <i class="bi bi-briefcase"></i>
+                            Hiring?
+                        </span>
+                        <div class="ms-3">
+                            <a href="#contact-me" class="btn btn-success fs-5 fw-bold stretched-link">Let's Chat!</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto my-auto">
+                    <a href="https://docs.google.com/document/d/1OXhOpS_0R9XaxMbjMaMJuRj1WHKsW5dUWVgsK8_gLXg/edit?usp=sharing" class="btn btn-lg btn-outline-light align-items-center">
+                        View CV
+                        <i class="bi bi-box-arrow-up-right ms-2"></i>
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<style lang="scss">
+.row > .hero-headshot-container {
+    width: 70vw;
+}
+</style>
