@@ -1,12 +1,12 @@
 @import '../../node_modules/bootstrap/scss/functions';
-
-$body-bg: shade-color(white, 10%);
-
 @import '../../node_modules/bootstrap/scss/variables';
 @import '../../node_modules/bootstrap/scss/mixins';
 @import '../../node_modules/bootstrap/scss/root';
 
 
+.row > .hero-headshot-container {
+    width: 70vw;
+}
 @include media-breakpoint-up(lg) {
     .row > .hero-headshot-container {
         max-width: 25rem;

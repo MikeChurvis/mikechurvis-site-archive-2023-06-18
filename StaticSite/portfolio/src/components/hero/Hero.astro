@@ -9,11 +9,12 @@ p-3
 bg-primary
 ">
     <div class="row justify-content-center">
-        <div class="hero-headshot-container">
+        <div class="hero-headshot-container d-flex">
             <img class="
             rounded-circle
             shadow
             w-100
+            align-self-center
             " 
             src={ headshotImg } 
             alt="The bust of Mike Churvis wearing a blue polo and glasses">
@@ -37,10 +38,8 @@ bg-primary
             <div class="row py-4 justify-content-center justify-content-lg-start">
                 <div class="col-auto align-items-center">
                     <div class="alert alert-info m-0 shadow shadow-glow-info p-2 d-inline-flex align-items-center">
-                        <span class="text-success fs-4">
-                            <i class="bi bi-briefcase"></i>
-                            Hiring?
-                        </span>
+                        <i class="bi bi-briefcase text-success fs-2 me-2"></i>
+                        <span class="text-success fs-4 fw-bold">Hiring?</span>
                         <div class="ms-3">
                             <a href="#contact-me" class="btn btn-success fs-5 fw-bold stretched-link">Let's Chat!</a>
                         </div>
@@ -57,9 +56,3 @@ bg-primary
         </div>
     </div>
 </div>
-
-<style lang="scss">
-.row > .hero-headshot-container {
-    width: 70vw;
-}
-</style>

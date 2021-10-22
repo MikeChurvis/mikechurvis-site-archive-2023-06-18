@@ -1,5 +1,5 @@
 ---
-const { logo, color } = Astro.props;
+const { logo } = Astro.props;
 const logoPath = "../../images/" + logo;
 ---
 
@@ -14,7 +14,7 @@ const logoPath = "../../images/" + logo;
             </span>
         </div>
     )}
-    <div class={ ('text-' + (color ?? 'black')) + ' text-center display-6 fs-4 fw-normal'}>
+    <div class="text-black text-center display-6 fs-4 fw-normal">
         <slot></slot>
     </div>
 </div>

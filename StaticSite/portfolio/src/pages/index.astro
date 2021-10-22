@@ -8,9 +8,42 @@ import Section from '../components/Section.astro'
 	<div class="container-fluid p-0">
 		<Hero></Hero>
 
-		<Section title="about me"></Section>
-		<Section title="my skills"></Section>
-		<Section title="my blog"></Section>
-		<Section title="contact me"></Section>
+		<Section title="about me">
+			<section class="fs-5">
+				<p>
+					Hello! I'm Mike. 
+					I design, build, and deploy web apps and websites, 
+					<strong>like the you're looking at now!</strong>
+				
+				</p>
+				<p>
+					There's no job like a job done right. 
+					That's why I take the time and effort to 
+					consider every facet of the software's <strong>purpose, audience, and lifecycle</strong>,
+					rather than just jumping straight to writing code.
+					By rejecting the "ready-fire-aim" mentality, 
+					I make sure that the solutions I deliver are good
+					for the end-users, 
+					for the developers, 
+					and for the software itself.
+				</p>
+			</section>
+		</Section>
+		<Section title="my skills">
+		
+		</Section>
+		<Section title="my blog">
+		
+		</Section>
+		<Section title="contact me">
+		
+		</Section>
 	</div>
 </BaseLayout>
+
+<style lang="scss">
+section {
+	width: clamp(20rem, 90vw, 40rem);
+}
+</style>
+
