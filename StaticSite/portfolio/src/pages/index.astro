@@ -2,30 +2,30 @@
 import BaseLayout from '../layouts/BaseLayout.astro'
 import Hero from '../components/hero/Hero.astro'
 import Section from '../components/Section.astro'
+import StackDemo from '../components/stackdemo/StackDemo.astro'
 ---
 
 <BaseLayout title="Mike Churvis">
 	<div class="container-fluid p-0">
 		<Hero></Hero>
 
-		<Section title="about me">
-			<section class="fs-5">
+		<Section title="welcome">
+			<section class="fs-5 mx-auto">
 				<p>
-					Hello! I'm Mike. 
-					I design, build, and deploy web apps and websites, 
-					<strong>like the you're looking at now!</strong>
-				
+					Hi! I'm Mike.
+					The page you're looking at is not just a website,
+					<strong>it's a full-stack web application:</strong>
 				</p>
+				<div class="d-flex p-5 align-items-center justify-content-center">
+					<StackDemo></StackDemo>
+				</div>
 				<p>
-					There's no job like a job done right. 
-					That's why I take the time and effort to 
-					consider every facet of the software's <strong>purpose, audience, and lifecycle</strong>,
-					rather than just jumping straight to writing code.
-					By rejecting the "ready-fire-aim" mentality, 
-					I make sure that the solutions I deliver are good
-					for the end-users, 
-					for the developers, 
-					and for the software itself.
+					A Django web server drives the
+					<a href="#my-blog">blog post</a> 
+					tagging and search system, as well as the
+					<a href="#contact-me">contact form</a>
+					at the bottom of the page. This server is
+					hosted on DigitalOcean
 				</p>
 			</section>
 		</Section>
@@ -43,7 +43,8 @@ import Section from '../components/Section.astro'
 
 <style lang="scss">
 section {
-	width: clamp(20rem, 90vw, 40rem);
+	width: 100%;
+	max-width: 40rem;
 }
 </style>
 
