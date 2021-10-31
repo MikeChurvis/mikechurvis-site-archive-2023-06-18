@@ -1,0 +1,34 @@
+---
+const { title, iconFileName, iconFullPath } = Astro.props;
+const directoryPrefix = '../images/logos/';
+const titleSlug = title.toLowerCase().replace(/\W/, "-");
+
+let iconPath;
+
+if (!!iconFullPath) { 
+    iconPath = iconFullPath; 
+}
+else if (!!iconFileName) {
+    iconPath = directoryPrefix + iconFileName;
+}
+else { 
+    iconPath = directoryPrefix + titleSlug + '-logo.png'
+}
+---
+
+
+<div class="col">
+    
+    <div class="d-flex justify-content-center mb-1">
+        <img src={Astro.resolve(iconPath)} alt="" class="thumb">
+    </div>
+    <div class="text-center fs-6">
+        {title}
+    </div>
+</div>
+
+<style>
+img.thumb {
+    max-height: 2.7rem;
+}
+</style>

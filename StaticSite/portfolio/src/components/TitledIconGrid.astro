@@ -1,0 +1,16 @@
+---
+const {title, columns} = Astro.props;
+
+const colClass = columns ? " row-cols-" + columns : "";
+---
+
+<div class="container-fluid p-3 border rounded mb-1">
+    <div class="row mb-2">
+        <div class="col">
+            <h4 class="text-center">{title}</h4>
+        </div>
+    </div>
+    <div class={"row justify-content-center" + colClass}>
+        <slot></slot>
+    </div>
+</div>

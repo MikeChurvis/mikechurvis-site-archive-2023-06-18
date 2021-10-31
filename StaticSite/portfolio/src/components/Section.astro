@@ -4,21 +4,36 @@ const slug_id = title.toLowerCase().replace(/\W/g, "-");
 ---
 
 
-<div id={slug_id} class="section m-1 p-3 col-11 mx-auto">
-    <div class="row justify-content-center align-items-center">
-        <div class="col">
-            <hr>
+<section id={slug_id} class="col-11 mx-auto">
+    <div class="fs-5 m-1 p-3">
+        <div class="row justify-content-center align-items-center">
+            <div class="col">
+                <hr>
+            </div>
+            <div class="col-auto">
+                <h1 class="text-center text-primary text-uppercase">{title}</h1>
+            </div>
+            <div class="col">
+                <hr>
+            </div>
         </div>
-        <div class="col-auto">
-            <h1 class="text-center text-primary text-uppercase">{title}</h1>
-        </div>
-        <div class="col">
-            <hr>
+        <div class="row justify-content-center">
+            <div class="col-auto section-slot">
+                <slot></slot>
+            </div>
         </div>
     </div>
-    <div class="row justify-content-center">
-        <div class="col-auto">
-            <slot></slot>
-        </div>
-    </div>
-</div>
+</section>
+
+<style lang="scss">
+.section-slot {
+	width: 100%;
+	max-width: 45rem;
+}
+
+section {
+  margin-top: -60px !important;
+  padding-top: 60px !important;
+}
+</style>
+

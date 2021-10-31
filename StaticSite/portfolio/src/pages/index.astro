@@ -3,48 +3,83 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 import Hero from '../components/hero/Hero.astro'
 import Section from '../components/Section.astro'
 import StackDemo from '../components/stackdemo/StackDemo.astro'
+import TitledIconGrid from '../components/TitledIconGrid.astro'
+import TitledIconGridElement from '../components/TitledIconGridElement.astro'
+import Navbar from '../components/Navbar.astro'
 ---
 
 <BaseLayout title="Mike Churvis">
 	<div class="container-fluid p-0">
+		<div id="top"></div>
+
 		<Hero></Hero>
 
-		<Section title="welcome">
-			<section class="fs-5 mx-auto">
-				<p>
-					Hi! I'm Mike.
-					The page you're looking at is not just a website,
-					<strong>it's a full-stack web application:</strong>
-				</p>
-				<div class="d-flex p-5 align-items-center justify-content-center">
-					<StackDemo></StackDemo>
-				</div>
-				<p>
-					A Django web server drives the
-					<a href="#my-blog">blog post</a> 
-					tagging and search system, as well as the
-					<a href="#contact-me">contact form</a>
-					at the bottom of the page. This server is
-					hosted on DigitalOcean
-				</p>
-			</section>
-		</Section>
-		<Section title="my skills">
+		<Navbar></Navbar>
+
 		
+		<Section title="welcome">
+			<p>
+				Hey folks, I'm Mike!
+				I build web apps and websites,
+				<strong>like this one!</strong>
+			</p>
+			<p>
+				In fact, I built this website <em>the hard way:</em>
+				no templates, no WYSIWYG editors, no boilerplate,
+				<strong>no shortcuts.</strong>
+				Why? Because that's how I learned...
+			</p>
+			<div id="my-skills">
+				<TitledIconGrid title="Frontend">
+					<TitledIconGridElement title="Vue"></TitledIconGridElement>
+					<TitledIconGridElement title="TypeScript" iconFileName="typescript-logo.svg"></TitledIconGridElement>
+					<TitledIconGridElement title="Bootstrap" iconFileName="bootstrap-logo.svg"></TitledIconGridElement>
+					<TitledIconGridElement title="Sass/SCSS" iconFileName="sass-logo.png"></TitledIconGridElement>
+					<TitledIconGridElement title="ES6"></TitledIconGridElement>
+				</TitledIconGrid>
+				<TitledIconGrid title="Backend">
+					<TitledIconGridElement title="Django"></TitledIconGridElement>
+					<TitledIconGridElement title="PostgreSQL"></TitledIconGridElement>
+					<TitledIconGridElement title="Docker"></TitledIconGridElement>
+					<TitledIconGridElement title="Ubuntu"></TitledIconGridElement>
+					<TitledIconGridElement title="Nginx"></TitledIconGridElement>
+					<TitledIconGridElement title="DigitalOcean"></TitledIconGridElement>
+				</TitledIconGrid>
+				<TitledIconGrid title="Tooling">
+					<TitledIconGridElement title="PyCharm"></TitledIconGridElement>
+					<TitledIconGridElement title="VS Code"></TitledIconGridElement>
+					<TitledIconGridElement title="Git"></TitledIconGridElement>
+					<TitledIconGridElement title="GitHub"></TitledIconGridElement>
+					<TitledIconGridElement title="GitHub Actions"></TitledIconGridElement>
+					<TitledIconGridElement title="Bash"></TitledIconGridElement>
+					<TitledIconGridElement title="Astro"></TitledIconGridElement>
+				</TitledIconGrid>
+				<TitledIconGrid title="Principles">
+					<TitledIconGridElement title="Mobile-First Design" iconFileName="mobile-first-logo.png"></TitledIconGridElement>
+					<TitledIconGridElement title="CI/CD"></TitledIconGridElement>
+					<TitledIconGridElement title="12-Factor Apps" iconFileName="12-factor-logo.png"></TitledIconGridElement>
+					<TitledIconGridElement title="SEO"></TitledIconGridElement>
+					<TitledIconGridElement title="Accessibility"></TitledIconGridElement>
+					<TitledIconGridElement title="REST Architecture" iconFileName="rest-logo.png"></TitledIconGridElement>
+				</TitledIconGrid>
+			</div>
+			<p class="fs-4 text-center py-5">
+				Where others might dabble and put these on a resumé,<br>
+				<strong>I dive deep, and put these into practice.</strong>
+			</p>
 		</Section>
+		
 		<Section title="my blog">
+			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		</Section>
+		<Section title="about me">
 		
 		</Section>
 		<Section title="contact me">
 		
 		</Section>
+		
 	</div>
 </BaseLayout>
 
-<style lang="scss">
-section {
-	width: 100%;
-	max-width: 40rem;
-}
-</style>
 
