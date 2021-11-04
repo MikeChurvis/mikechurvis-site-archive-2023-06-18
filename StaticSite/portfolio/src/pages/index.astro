@@ -2,9 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro'
 import Hero from '../components/hero/Hero.astro'
 import Section from '../components/Section.astro'
-import StackDemo from '../components/stackdemo/StackDemo.astro'
-import TitledIconGrid from '../components/TitledIconGrid.astro'
-import TitledIconGridElement from '../components/TitledIconGridElement.astro'
+import TitledContainer from '../components/TitledContainer.astro'
+import LabeledIcon from '../components/LabeledIcon.astro'
 import Navbar from '../components/Navbar.astro'
 ---
 
@@ -12,74 +11,144 @@ import Navbar from '../components/Navbar.astro'
 	<div class="container-fluid p-0">
 		<div id="top"></div>
 
-		<Hero></Hero>
-
 		<Navbar></Navbar>
 
-		
+		<Hero></Hero>
+
 		<Section title="welcome">
 			<p>
-				Hey folks, I'm Mike!
-				I build web apps and websites,
-				<strong>like this one!</strong>
+				Hey folks, I'm Mike! 
+				I'm a developer based near Atlanta, GA.
+				I design, build, and deploy web apps and websites.
 			</p>
 			<p>
-				In fact, I built this website <em>the hard way:</em>
+				In fact, not only did <strong>I build this website</strong>, 
+				I built it <em>the hard way:</em>
 				no templates, no WYSIWYG editors, no boilerplate,
 				<strong>no shortcuts.</strong>
+			</p>
+			<p>
 				Why? Because that's how I learned...
 			</p>
-			<div id="my-skills">
-				<TitledIconGrid title="Frontend">
-					<TitledIconGridElement title="Vue"></TitledIconGridElement>
-					<TitledIconGridElement title="TypeScript" iconFileName="typescript-logo.svg"></TitledIconGridElement>
-					<TitledIconGridElement title="Bootstrap" iconFileName="bootstrap-logo.svg"></TitledIconGridElement>
-					<TitledIconGridElement title="Sass/SCSS" iconFileName="sass-logo.png"></TitledIconGridElement>
-					<TitledIconGridElement title="ES6"></TitledIconGridElement>
-				</TitledIconGrid>
-				<TitledIconGrid title="Backend">
-					<TitledIconGridElement title="Django"></TitledIconGridElement>
-					<TitledIconGridElement title="PostgreSQL"></TitledIconGridElement>
-					<TitledIconGridElement title="Docker"></TitledIconGridElement>
-					<TitledIconGridElement title="Ubuntu"></TitledIconGridElement>
-					<TitledIconGridElement title="Nginx"></TitledIconGridElement>
-					<TitledIconGridElement title="DigitalOcean"></TitledIconGridElement>
-				</TitledIconGrid>
-				<TitledIconGrid title="Tooling">
-					<TitledIconGridElement title="PyCharm"></TitledIconGridElement>
-					<TitledIconGridElement title="VS Code"></TitledIconGridElement>
-					<TitledIconGridElement title="Git"></TitledIconGridElement>
-					<TitledIconGridElement title="GitHub"></TitledIconGridElement>
-					<TitledIconGridElement title="GitHub Actions"></TitledIconGridElement>
-					<TitledIconGridElement title="Bash"></TitledIconGridElement>
-					<TitledIconGridElement title="Astro"></TitledIconGridElement>
-				</TitledIconGrid>
-				<TitledIconGrid title="Principles">
-					<TitledIconGridElement title="Mobile-First Design" iconFileName="mobile-first-logo.png"></TitledIconGridElement>
-					<TitledIconGridElement title="CI/CD"></TitledIconGridElement>
-					<TitledIconGridElement title="12-Factor Apps" iconFileName="12-factor-logo.png"></TitledIconGridElement>
-					<TitledIconGridElement title="SEO"></TitledIconGridElement>
-					<TitledIconGridElement title="Accessibility"></TitledIconGridElement>
-					<TitledIconGridElement title="REST Architecture" iconFileName="rest-logo.png"></TitledIconGridElement>
-				</TitledIconGrid>
+		</Section>
+		
+		<Section title="my skills">
+			<div>
+				<TitledContainer title="Frontend">
+					<LabeledIcon title="Vue"></LabeledIcon>
+					<LabeledIcon title="TypeScript" iconFileName="typescript-logo.svg"></LabeledIcon>
+					<LabeledIcon title="Bootstrap" iconFileName="bootstrap-logo.svg"></LabeledIcon>
+					<LabeledIcon title="Sass/SCSS" iconFileName="sass-logo.png"></LabeledIcon>
+					<LabeledIcon title="ES6"></LabeledIcon>
+					<LabeledIcon title="Astro"></LabeledIcon>
+				</TitledContainer>
+				<TitledContainer title="Backend">
+					<LabeledIcon title="Django"></LabeledIcon>
+					<LabeledIcon title="PostgreSQL"></LabeledIcon>
+					<LabeledIcon title="Docker"></LabeledIcon>
+					<LabeledIcon title="Ubuntu"></LabeledIcon>
+					<LabeledIcon title="Nginx"></LabeledIcon>
+					<LabeledIcon title="DigitalOcean"></LabeledIcon>
+				</TitledContainer>
+				<TitledContainer title="Tooling">
+					<LabeledIcon title="PyCharm"></LabeledIcon>
+					<LabeledIcon title="VS Code"></LabeledIcon>
+					<LabeledIcon title="Git"></LabeledIcon>
+					<LabeledIcon title="GitHub"></LabeledIcon>
+					<LabeledIcon title="GitHub Actions"></LabeledIcon>
+					<LabeledIcon title="Bash"></LabeledIcon>
+				</TitledContainer>
+				<TitledContainer title="Principles" columns="4">
+					<LabeledIcon title="Agile"></LabeledIcon>
+					<LabeledIcon title="CI/CD"></LabeledIcon>
+					<LabeledIcon title="Git Flow"></LabeledIcon>
+					<LabeledIcon title="Mobile-First Design" iconFileName="mobile-first-logo.png"></LabeledIcon>
+					<LabeledIcon title="12-Factor Apps" iconFileName="12-factor-logo.png"></LabeledIcon>
+					<LabeledIcon title="SEO"></LabeledIcon>
+					<LabeledIcon title="Accessibility"></LabeledIcon>
+					<LabeledIcon title="REST Architecture" iconFileName="rest-logo.png"></LabeledIcon>
+				</TitledContainer>
 			</div>
-			<p class="fs-4 text-center py-5">
-				Where others might dabble and put these on a resumé,<br>
-				<strong>I dive deep, and put these into practice.</strong>
+			<p>
+				For an exhaustive list of the technologies I've worked with
+				and the training I've completed,
+				<a 
+				href="https://docs.google.com/document/d/1OXhOpS_0R9XaxMbjMaMJuRj1WHKsW5dUWVgsK8_gLXg/edit?usp=sharing" 
+				>
+					check out my CV!
+				</a>
 			</p>
 		</Section>
-		
-		<Section title="my blog">
-			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		</Section>
-		<Section title="about me">
-		
-		</Section>
 		<Section title="contact me">
-		
-		</Section>
-		
+			
+			<div class="row justify-content-center">
+				<div class="col-11 col-lg-3 mb-2">
+					<h2 class="text-primary">
+						Let's Connect!
+					</h2>
+					<p>
+						I'd love to answer any questions you have.
+					</p>
+				</div>
+				<div class="col-11 col-lg-9">
+					<form id="contact-form">
+						<div class="form-floating mb-2">
+							<input 
+							type="text"
+							required 
+							name="name" 
+							placeholder="name"
+							id="ct-form-name" 
+							class="form-control"
+							autocomplete="off"
+							>
+							<label for="ct-form-name">Name</label>
+						</div>
+						<div class="form-floating mb-2">
+							
+							<input 
+							type="email" 
+							required 
+							name="email"
+							placeholder="email"
+							id="ct-form-email" 
+							class="form-control" 
+							autocomplete="off"
+							>
+							<label for="ct-form-email">Email</label>
+						</div>
+						<div class="form-floating mb-2">	
+							<textarea 
+							required 
+							name="message" 
+							placeholder="message"
+							id="ct-form-message" 
+							class="form-control"
+							></textarea>
+							<label for="ct-form-message">Message (20 to 1000 characters)</label>
+						</div>
+						<button 
+						type="submit" 
+						class="btn btn-primary btn-lg" 
+						minlength="20" 
+						maxlength="1000"
+						>
+							Send
+						</button>
+					</form>
+				</div>
+			</div>
+			
+		</Section>		
 	</div>
 </BaseLayout>
 
 
+<style>
+p:last-child {
+	margin-bottom: 0;
+}
+textarea.form-control {
+	height: 5rem;
+}
+</style>
