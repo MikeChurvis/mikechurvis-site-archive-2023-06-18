@@ -5,6 +5,7 @@ import Section from '../components/Section.astro'
 import TitledContainer from '../components/TitledContainer.astro'
 import LabeledIcon from '../components/LabeledIcon.astro'
 import Navbar from '../components/Navbar.astro'
+import ContactForm from '../components/ContactForm.vue'
 ---
 
 <BaseLayout title="Mike Churvis">
@@ -79,8 +80,7 @@ import Navbar from '../components/Navbar.astro'
 				</a>
 			</p>
 		</Section>
-		<Section title="contact me">
-			
+		<Section title="contact me">		
 			<div class="row justify-content-center">
 				<div class="col-11 col-lg-3 mb-2">
 					<h2 class="text-primary">
@@ -91,55 +91,10 @@ import Navbar from '../components/Navbar.astro'
 					</p>
 				</div>
 				<div class="col-11 col-lg-9">
-					<form id="contact-form">
-						<div class="form-floating mb-2">
-							<input 
-							type="text"
-							required 
-							name="name" 
-							placeholder="name"
-							id="ct-form-name" 
-							class="form-control"
-							autocomplete="off"
-							>
-							<label for="ct-form-name">Name</label>
-						</div>
-						<div class="form-floating mb-2">
-							
-							<input 
-							type="email" 
-							required 
-							name="email"
-							placeholder="email"
-							id="ct-form-email" 
-							class="form-control" 
-							autocomplete="off"
-							>
-							<label for="ct-form-email">Email</label>
-						</div>
-						<div class="form-floating mb-2">	
-							<textarea 
-							required 
-							name="message" 
-							placeholder="message"
-							id="ct-form-message" 
-							class="form-control"
-							></textarea>
-							<label for="ct-form-message">Message (20 to 1000 characters)</label>
-						</div>
-						<button 
-						type="submit" 
-						class="btn btn-primary btn-lg" 
-						minlength="20" 
-						maxlength="1000"
-						>
-							Send
-						</button>
-					</form>
+					<ContactForm client:visible></ContactForm>
 				</div>
 			</div>
-			
-		</Section>		
+		</Section>
 	</div>
 </BaseLayout>
 
@@ -149,6 +104,6 @@ p:last-child {
 	margin-bottom: 0;
 }
 textarea.form-control {
-	height: 5rem;
+	height: 15rem;
 }
 </style>
