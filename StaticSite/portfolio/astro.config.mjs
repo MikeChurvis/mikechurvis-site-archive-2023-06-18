@@ -12,4 +12,11 @@ export default /** @type {import('astro').AstroUserConfig} */ ({
   renderers: [
     '@astrojs/renderer-vue',
   ],
+  packageOptions: {
+    types: true,
+  },
+  buildOptions: {
+    out: "dist",
+    sourcemap: true,
+  },
 });

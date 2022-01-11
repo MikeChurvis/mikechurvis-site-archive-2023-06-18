@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+
+  web: &web
+    build: ./portfolio
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./portfolio/:/usr/src/app
+    ports:
+      - 8000:8000
+    env_file: 
+      - .env
+    depends_on: 
+      - redis
+
+  redis:
+    image: redis:6-alpine
+
+  celery:
+    <<: *web
+    command: celery -A portfolio worker --loglevel=info --logfile=logs/celery.log
+    ports: []
+    depends_on:
+      - web
+      - redis
+
+  flower:
+    <<: *web
+    command: celery -A portfolio --broker=${CELERY_BROKER} flower --port=5555 
+    volumes: []
+    ports:
+      - 5555:5555
+    depends_on:
+      - web
+      - redis
+      - celery

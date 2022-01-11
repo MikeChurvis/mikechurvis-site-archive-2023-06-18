@@ -1,16 +1,36 @@
+import json
+from http import HTTPStatus
+
 from django.http import JsonResponse, HttpRequest
+from django.views.decorators.csrf import csrf_exempt
+
+from .models import Message, MessageForm
+from .tasks import queue_send_message_as_email
 
 
+@csrf_exempt
 def submit_contact_form(request: HttpRequest) -> JsonResponse:
-    data = request.POST
+    if request.method != 'POST':
+        return JsonResponse({'http_error': 'Only POST method is allowed.'}, status=HTTPStatus.METHOD_NOT_ALLOWED)
     
-    name = data.get('name')
-    company = data.get('company')
-    email = data.get('email')
-    message = data.get('message')
+    request_data = json.loads(request.body)
     
-    request_echo = str(request.GET)
-    return JsonResponse({
-        'greeting': 'Hi! You sent me this:',
-        'your_request': request_echo,
-    })
+    message = MessageForm(request_data)
+    
+    if message.is_valid():
+        print('message valid')
+        
+        if not request_data.get('dry_run'):
+            saved_message = message.save()
+            print(f'message (id:{saved_message.id}) saved')
+            queue_send_message_as_email.delay(saved_message.id)
+            print(f'message (id:{saved_message.id}) email queued')
+        else:
+            print('DRY RUN: message intentionally not saved')
+        
+        response = JsonResponse({'success': True})
+    else:
+        print(request_data, dict(message.errors))
+        response = JsonResponse({'validation_error': dict(message.errors)}, status=HTTPStatus.BAD_REQUEST)
+    
+    return response

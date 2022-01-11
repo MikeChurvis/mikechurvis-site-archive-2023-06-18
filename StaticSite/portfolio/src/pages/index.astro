@@ -6,30 +6,27 @@ import TitledContainer from '../components/TitledContainer.astro'
 import LabeledIcon from '../components/LabeledIcon.astro'
 import Navbar from '../components/Navbar.astro'
 import ContactForm from '../components/ContactForm.vue'
+
+const { PUBLIC_CONTACT_FORM_TARGET } = import.meta.env;
 ---
 
 <BaseLayout title="Mike Churvis">
-	<div class="container-fluid p-0">
+	<div id="id-navbar-target" class="container-fluid p-0" style="position: relative;" data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="40">
 		<div id="top"></div>
 
-		<Navbar></Navbar>
+		<Navbar />
 
-		<Hero></Hero>
+		<Hero />
 
 		<Section title="welcome">
 			<p>
-				Hey folks, I'm Mike! 
-				I'm a developer based near Atlanta, GA.
-				I design, build, and deploy web apps and websites.
+				Hi! I'm Mike. I'm a web developer from Atlanta, GA.
 			</p>
 			<p>
-				In fact, not only did <strong>I build this website</strong>, 
-				I built it <em>the hard way:</em>
-				no templates, no WYSIWYG editors, no boilerplate,
-				<strong>no shortcuts.</strong>
+				I learn by doing. That's why <strong>I built this website the hard way</strong>: no templates, no boilerplate, no shortcuts.
 			</p>
 			<p>
-				Why? Because that's how I learned...
+				Here's some of what I learned:
 			</p>
 		</Section>
 		
@@ -41,7 +38,7 @@ import ContactForm from '../components/ContactForm.vue'
 					<LabeledIcon title="Bootstrap" iconFileName="bootstrap-logo.svg"></LabeledIcon>
 					<LabeledIcon title="Sass/SCSS" iconFileName="sass-logo.png"></LabeledIcon>
 					<LabeledIcon title="ES6"></LabeledIcon>
-					<LabeledIcon title="Astro"></LabeledIcon>
+					<!-- <LabeledIcon title="Astro"></LabeledIcon> -->
 				</TitledContainer>
 				<TitledContainer title="Backend">
 					<LabeledIcon title="Django"></LabeledIcon>
@@ -49,13 +46,13 @@ import ContactForm from '../components/ContactForm.vue'
 					<LabeledIcon title="Docker"></LabeledIcon>
 					<LabeledIcon title="Ubuntu"></LabeledIcon>
 					<LabeledIcon title="Nginx"></LabeledIcon>
-					<LabeledIcon title="DigitalOcean"></LabeledIcon>
+					<!-- <LabeledIcon title="DigitalOcean"></LabeledIcon> -->
 				</TitledContainer>
 				<TitledContainer title="Tooling">
 					<LabeledIcon title="PyCharm"></LabeledIcon>
 					<LabeledIcon title="VS Code"></LabeledIcon>
 					<LabeledIcon title="Git"></LabeledIcon>
-					<LabeledIcon title="GitHub"></LabeledIcon>
+					<!-- <LabeledIcon title="GitHub"></LabeledIcon> -->
 					<LabeledIcon title="GitHub Actions"></LabeledIcon>
 					<LabeledIcon title="Bash"></LabeledIcon>
 				</TitledContainer>
@@ -71,13 +68,10 @@ import ContactForm from '../components/ContactForm.vue'
 				</TitledContainer>
 			</div>
 			<p>
-				For an exhaustive list of the technologies I've worked with
-				and the training I've completed,
-				<a 
-				href="https://docs.google.com/document/d/1OXhOpS_0R9XaxMbjMaMJuRj1WHKsW5dUWVgsK8_gLXg/edit?usp=sharing" 
-				>
-					check out my CV!
-				</a>
+				My CV is 
+				<a href="https://docs.google.com/document/d/1OXhOpS_0R9XaxMbjMaMJuRj1WHKsW5dUWVgsK8_gLXg/edit?usp=sharing" 
+				>available here</a>.
+				It contains a complete list of my skills and training.
 			</p>
 		</Section>
 		<Section title="contact me">		
@@ -91,11 +85,18 @@ import ContactForm from '../components/ContactForm.vue'
 					</p>
 				</div>
 				<div class="col-11 col-lg-9">
-					<ContactForm client:visible></ContactForm>
+					<ContactForm client:only target={ PUBLIC_CONTACT_FORM_TARGET }></ContactForm>
 				</div>
 			</div>
 		</Section>
 	</div>
+
+	<script slot="pageScripts">
+		var scrollSpy = new bootstrap.ScrollSpy(document.body, {
+			target: '#navbar',
+			offset: 90,
+		})
+	</script>
 </BaseLayout>
 
 

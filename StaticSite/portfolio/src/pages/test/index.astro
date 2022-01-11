@@ -1,0 +1,17 @@
+---
+import ContactForm from '@components/ContactForm.vue'
+
+import BaseLayout from '@layouts/BaseLayout.astro'
+
+import Debug from 'astro/debug'
+
+const targetHost = import.meta.env.PUBLIC_CONTACT_FORM_TARGET;
+
+---
+
+<BaseLayout>
+    <div class="container">
+        <Debug {{targetHost}} />
+        <ContactForm client:only target={targetHost} />
+    </div>
+</BaseLayout>
