@@ -2,20 +2,11 @@
 import BaseLayout from '@layouts/BaseLayout.astro'
 
 import Navbar from '@components/Navbar.astro'
-import Hero from '@components/Hero.astro'
 
-import AboutSection from '@sections/AboutSection.astro';
-import SkillsSection from '@sections/SkillsSection.astro';
-import ContactSection from '@sections/ContactSection.astro';
-
-import SectionHeading from '@components/SectionHeading.astro'
-import TitledContainer from '@components/TitledContainer.astro'
-import LabeledIcon from '@components/LabeledIcon.astro'
-import SecureAnchor from '@components/SecureAnchor.astro'
-import ContactForm from '@components/ContactForm.vue'
-
-
-const { PUBLIC_CONTACT_FORM_TARGET } = import.meta.env;
+import Hero from '@content/frontpage/Hero.astro'
+import AboutSection from '@content/frontpage/AboutSection.astro';
+import SkillsSection from '@content/frontpage/SkillsSection.astro';
+import ContactSection from '@content/frontpage/ContactSection.astro';
 ---
 
 <BaseLayout title="Mike Churvis">
@@ -40,73 +31,6 @@ const { PUBLIC_CONTACT_FORM_TARGET } = import.meta.env;
       <SkillsSection />
 
       <ContactSection />
-
-      <SectionHeading title="my skills" />
-
-      <section class="mx-auto">
-        <TitledContainer title="Frontend">
-          <LabeledIcon title="Vue" />
-          <LabeledIcon title="TypeScript" iconFileName="typescript-logo.svg" />
-          <LabeledIcon title="Bootstrap" iconFileName="bootstrap-logo.svg" />
-          <LabeledIcon title="Sass/SCSS" iconFileName="sass-logo.png" />
-          <LabeledIcon title="ES6" />
-          <LabeledIcon title="Astro" />
-        </TitledContainer>
-        <TitledContainer title="Backend">
-          <LabeledIcon title="Django" />
-          <LabeledIcon title="PostgreSQL" />
-          <LabeledIcon title="Docker" />
-          <LabeledIcon title="Ubuntu" />
-          <LabeledIcon title="Nginx" />
-          <LabeledIcon title="DigitalOcean" />
-        </TitledContainer>
-        <TitledContainer title="Tooling">
-          <LabeledIcon title="PyCharm" />
-          <LabeledIcon title="VS Code" />
-          <LabeledIcon title="Git" />
-          <LabeledIcon title="GitHub" />
-          <LabeledIcon title="GitHub Actions" />
-          <LabeledIcon title="Bash" />
-        </TitledContainer>
-        <TitledContainer title="Principles" columns="4">
-          <LabeledIcon title="Agile" />
-          <LabeledIcon title="CI/CD" />
-          <LabeledIcon title="Git Flow" />
-          <LabeledIcon title="Mobile-First Design" iconFileName="mobile-first-logo.png" />
-          <LabeledIcon title="12-Factor Apps" iconFileName="12-factor-logo.png" />
-          <LabeledIcon title="SEO" />
-          <LabeledIcon title="Accessibility" />
-          <LabeledIcon title="REST Architecture" iconFileName="rest-logo.png" />
-        </TitledContainer>
-        <p>
-          My CV is
-          <SecureAnchor
-            href="https://docs.google.com/document/d/1OXhOpS_0R9XaxMbjMaMJuRj1WHKsW5dUWVgsK8_gLXg/edit?usp=sharing"
-          >available here</SecureAnchor>.
-          It contains a complete list of my skills and training.
-        </p>
-      </section>
-
-
-
-      <SectionHeading title="contact me" />		
-      
-      <section class="mx-auto">
-        <div class="row justify-content-center">
-          <div class="col-11 col-lg-3 mb-2">
-            <h2 class="text-primary">
-              Let's Connect!
-            </h2>
-            <p>
-              I'd love to answer any questions you have.
-            </p>
-          </div>
-          <div class="col-11 col-lg-9">
-            <ContactForm client:only target={ PUBLIC_CONTACT_FORM_TARGET }></ContactForm>
-          </div>
-        </div>
-      </section>
-
 
     </div>
 
