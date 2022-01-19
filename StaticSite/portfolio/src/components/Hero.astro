@@ -1,50 +1,56 @@
 ---
-import headshotImg from '../images/HeadshotTransparencyOffWhite.png';
+import headshotImg from '@images/HeadshotTransparencyOffWhite.png';
+import SecureAnchor from '@components/SecureAnchor.astro';
 ---
 
 <div class="
-container-fluid 
-p-3 
-bg-primary
+  container-fluid 
+  p-3 
+  bg-primary
 ">
-    <div class="row justify-content-center">
-        <div class="hero-headshot-container d-flex">
-            <img class="
-            rounded-circle
-            shadow
-            w-100
-            align-self-center
-            " 
-            src={ headshotImg } 
-            alt="The bust of Mike Churvis wearing a blue polo and glasses">
-        </div>
-
-        <!-- force line break when screen is narrow -->
-        <div class="w-100 d-block d-lg-none"></div>
-
-        <div class="col-auto mt-3 mt-lg-1">
-            <h1 class="display-1 text-center text-lg-start text-white">Mike Churvis</h1>
-            <h2 class="display-5 py-3 text-center text-lg-start text-white">Full-Stack Developer</h2>
-            <h3 class="fs-4 text-center text-lg-start text-white">Web Apps &bull; Websites &bull; APIs</h3>
-            
-            <div class="row justify-content-center justify-content-lg-start">
-                <div class="col-auto align-items-center">
-                    <div class="alert alert-info m-0 my-3 shadow shadow-glow-info p-2 d-inline-flex align-items-center">
-                        <i class="bi bi-briefcase text-success fs-2 me-2"></i>
-                        <span class="text-success fs-4 fw-bold">Hiring?</span>
-                        <div class="ms-3">
-                            <a href="#contact-form-name" class="btn btn-success fs-5 fw-bold stretched-link">Contact Me</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-auto my-auto">
-                    <a href="https://docs.google.com/document/d/1OXhOpS_0R9XaxMbjMaMJuRj1WHKsW5dUWVgsK8_gLXg/edit?usp=sharing" class="btn btn-lg btn-outline-light align-items-center">
-                        View CV
-                        <i class="bi bi-box-arrow-up-right ms-2"></i>
-                    </a>
-                </div>
-            </div>
-            
-        </div>
+  <div class="row justify-content-center">
+    <div class="hero-headshot-container d-flex">
+      <img 
+        class="
+        rounded-circle
+        shadow
+        w-100
+        align-self-center
+        " 
+        src={ headshotImg } 
+        alt="The bust of Mike Churvis wearing a blue polo and glasses"
+      >
     </div>
+
+    <!-- force line break when screen is narrow -->
+    <div class="w-100 d-block d-lg-none"></div>
+
+    <div class="col-auto mt-3 mt-lg-1">
+      <h1 class="display-1 text-center text-lg-start text-white">Mike Churvis</h1>
+      <h2 class="display-5 py-3 text-center text-lg-start text-white">Full-Stack Developer</h2>
+      <h3 class="fs-4 text-center text-lg-start text-white">Web Apps &bull; Websites &bull; APIs</h3>
+            
+      <div class="row justify-content-center justify-content-lg-start">
+        <div class="col-auto align-items-center">
+          <div class="alert alert-info m-0 my-3 shadow shadow-glow-info p-2 d-inline-flex align-items-center">
+            <i class="bi bi-briefcase text-success fs-2 me-2"></i>
+            <span class="text-success fs-4 fw-bold">Hiring?</span>
+            <div class="ms-3">
+              <a href="#contact-form-name" class="btn btn-success fs-5 fw-bold stretched-link">Contact Me</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-auto my-auto">
+          <SecureAnchor 
+            href="https://docs.google.com/document/d/1OXhOpS_0R9XaxMbjMaMJuRj1WHKsW5dUWVgsK8_gLXg/edit?usp=sharing" 
+            class="btn btn-lg btn-outline-light align-items-center"
+          >
+            View my CV
+            <i class="bi bi-box-arrow-up-right ms-2"></i>
+          </SecureAnchor>
+        </div>
+      </div>
+            
+    </div>
+  </div>
 </div>

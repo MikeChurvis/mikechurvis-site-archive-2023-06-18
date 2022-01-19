@@ -1,0 +1,30 @@
+---
+const { title } = Astro.props;
+const slug_id = title.toLowerCase().replace(/\W/g, "-");
+---
+
+<div class="nav-adjusted-anchor-target" id={slug_id}></div>
+
+<div class="row justify-content-center align-items-center my-2">
+  <div class="col">
+    <hr>
+  </div>
+  <div class="col-auto">
+    <h1 class="text-center text-primary text-uppercase">
+      {title}
+    </h1>
+  </div>
+  <div class="col">
+    <hr>
+  </div>
+</div>
+
+    
+
+<style>
+div.nav-adjusted-anchor-target {
+  margin-top: -60px !important;
+  padding-top: 60px !important;
+}
+</style>
+

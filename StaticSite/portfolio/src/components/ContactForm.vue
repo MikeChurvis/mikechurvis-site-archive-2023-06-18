@@ -7,6 +7,7 @@ const FormState = {
   ReadyForInput: "ready",
   SubmissionPending: "pending",
   Success: "success",
+  Error: "error",
 } as const;
 
 export default defineComponent({
@@ -62,21 +63,34 @@ export default defineComponent({
         return;
       }
 
-      const response = await this.postFormData(this.formData);
+      let response: Response;
+
+      try {
+        response = await this.postFormData(this.formData);
+      } catch (error) {
+        console.error(error);
+        this.formState = FormState.Error;
+        return;
+      }
 
       if (response.ok) {
         this.formState = FormState.Success;
         return;
+      } 
+      
+      if (response.status !== 400) {
+        this.formState = FormState.Error;
+        console.error(response);
+        return;
       }
 
       const responseBody = await response.json();
-
-      this.reflectServerValidation(responseBody.errors);
-
+      this.reflectServerValidation(responseBody['validation_error']);
       this.formState = FormState.ReadyForInput;
     },
     reflectServerValidation: function (responseErrors: object): void {
       for (const field in responseErrors) {
+        // response: { 'field': ['error1', 'error2', ...], ... }
         this.errors[field] = responseErrors[field][0];
       }
     },
@@ -91,7 +105,11 @@ export default defineComponent({
       this.formData.email = email;
       this.formData.content = content;
 
-      const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      // HORRIBLE efficiency regexp. Causes page to hang on long email addresses.
+      /* const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; */
+
+      // This is sufficient for client validation. Django will validate more deeply with its built-in validator.
+      const emailRegexp = /[^@]+@[^.]+\..*/;
 
       const errorMsg = {
         required: () => "This field is required.",
@@ -132,12 +150,20 @@ export default defineComponent({
 
 
 <template>
-  <div class="container-fluid">
+  <div class="">
     <div
       v-if="this.formState === this.FormState.Success"
       class="p-5 alert alert-success"
     >
       <h1 class="mx-auto text-center">Message Sent</h1>
+    </div>
+
+    <div 
+      v-else-if="this.formState === this.FormState.Error" 
+      class="p-5 alert alert-warning"
+    >
+      <h1 class="mx-auto text-center">Error</h1>
+      <div class="text-center">Something went wrong on our end. Please try again later.</div>
     </div>
 
     <fieldset

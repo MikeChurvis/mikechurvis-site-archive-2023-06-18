@@ -1,0 +1,22 @@
+---
+export interface Props {
+  href: string;
+  _class?: string;
+}
+
+const { href, class: _class = "" } = Astro.props;
+---
+
+<!--
+Behavior:
+- Opens link in new tab
+- Prevents "tabnabbing" (see link below)
+
+https://www.freecodecamp.org/news/how-to-use-html-to-open-link-in-new-tab/#security-concerns-with-target-_blank
+-->
+<a 
+  href={href} 
+  class={_class} 
+  target="_blank" 
+  rel="noreferrer noopener"
+><slot/></a>

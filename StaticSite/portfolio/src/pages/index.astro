@@ -1,98 +1,120 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
-import Hero from '../components/Hero.astro'
-import Section from '../components/Section.astro'
-import TitledContainer from '../components/TitledContainer.astro'
-import LabeledIcon from '../components/LabeledIcon.astro'
-import Navbar from '../components/Navbar.astro'
-import ContactForm from '../components/ContactForm.vue'
+import BaseLayout from '@layouts/BaseLayout.astro'
+
+import Navbar from '@components/Navbar.astro'
+import Hero from '@components/Hero.astro'
+
+import AboutSection from '@sections/AboutSection.astro';
+import SkillsSection from '@sections/SkillsSection.astro';
+import ContactSection from '@sections/ContactSection.astro';
+
+import SectionHeading from '@components/SectionHeading.astro'
+import TitledContainer from '@components/TitledContainer.astro'
+import LabeledIcon from '@components/LabeledIcon.astro'
+import SecureAnchor from '@components/SecureAnchor.astro'
+import ContactForm from '@components/ContactForm.vue'
+
 
 const { PUBLIC_CONTACT_FORM_TARGET } = import.meta.env;
 ---
 
 <BaseLayout title="Mike Churvis">
-	<div id="id-navbar-target" class="container-fluid p-0" style="position: relative;" data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="40">
+	<div 
+    id="id-navbar-target" 
+    class="container-fluid p-0" 
+    style="position: relative;" 
+    data-bs-spy="scroll" 
+    data-bs-target="#navbar" 
+    data-bs-offset="40"
+  >
 		<div id="top"></div>
 
 		<Navbar />
 
 		<Hero />
 
-		<Section title="welcome">
-			<p>
-				Hi! I'm Mike. I'm a web developer from Atlanta, GA.
-			</p>
-			<p>
-				I learn by doing. That's why <strong>I built this website the hard way</strong>: no templates, no boilerplate, no shortcuts.
-			</p>
-			<p>
-				Here's some of what I learned:
-			</p>
-		</Section>
-		
-		<Section title="my skills">
-			<div>
-				<TitledContainer title="Frontend">
-					<LabeledIcon title="Vue"></LabeledIcon>
-					<LabeledIcon title="TypeScript" iconFileName="typescript-logo.svg"></LabeledIcon>
-					<LabeledIcon title="Bootstrap" iconFileName="bootstrap-logo.svg"></LabeledIcon>
-					<LabeledIcon title="Sass/SCSS" iconFileName="sass-logo.png"></LabeledIcon>
-					<LabeledIcon title="ES6"></LabeledIcon>
-					<!-- <LabeledIcon title="Astro"></LabeledIcon> -->
-				</TitledContainer>
-				<TitledContainer title="Backend">
-					<LabeledIcon title="Django"></LabeledIcon>
-					<LabeledIcon title="PostgreSQL"></LabeledIcon>
-					<LabeledIcon title="Docker"></LabeledIcon>
-					<LabeledIcon title="Ubuntu"></LabeledIcon>
-					<LabeledIcon title="Nginx"></LabeledIcon>
-					<!-- <LabeledIcon title="DigitalOcean"></LabeledIcon> -->
-				</TitledContainer>
-				<TitledContainer title="Tooling">
-					<LabeledIcon title="PyCharm"></LabeledIcon>
-					<LabeledIcon title="VS Code"></LabeledIcon>
-					<LabeledIcon title="Git"></LabeledIcon>
-					<!-- <LabeledIcon title="GitHub"></LabeledIcon> -->
-					<LabeledIcon title="GitHub Actions"></LabeledIcon>
-					<LabeledIcon title="Bash"></LabeledIcon>
-				</TitledContainer>
-				<TitledContainer title="Principles" columns="4">
-					<LabeledIcon title="Agile"></LabeledIcon>
-					<LabeledIcon title="CI/CD"></LabeledIcon>
-					<LabeledIcon title="Git Flow"></LabeledIcon>
-					<LabeledIcon title="Mobile-First Design" iconFileName="mobile-first-logo.png"></LabeledIcon>
-					<LabeledIcon title="12-Factor Apps" iconFileName="12-factor-logo.png"></LabeledIcon>
-					<LabeledIcon title="SEO"></LabeledIcon>
-					<LabeledIcon title="Accessibility"></LabeledIcon>
-					<LabeledIcon title="REST Architecture" iconFileName="rest-logo.png"></LabeledIcon>
-				</TitledContainer>
-			</div>
-			<p>
-				My CV is 
-				<a href="https://docs.google.com/document/d/1OXhOpS_0R9XaxMbjMaMJuRj1WHKsW5dUWVgsK8_gLXg/edit?usp=sharing" 
-				>available here</a>.
-				It contains a complete list of my skills and training.
-			</p>
-		</Section>
-		<Section title="contact me">		
-			<div class="row justify-content-center">
-				<div class="col-11 col-lg-3 mb-2">
-					<h2 class="text-primary">
-						Let's Connect!
-					</h2>
-					<p>
-						I'd love to answer any questions you have.
-					</p>
-				</div>
-				<div class="col-11 col-lg-9">
-					<ContactForm client:only target={ PUBLIC_CONTACT_FORM_TARGET }></ContactForm>
-				</div>
-			</div>
-		</Section>
+    <div id="content" class="container fs-5">
+
+      <AboutSection />
+
+      <SkillsSection />
+
+      <ContactSection />
+
+      <SectionHeading title="my skills" />
+
+      <section class="mx-auto">
+        <TitledContainer title="Frontend">
+          <LabeledIcon title="Vue" />
+          <LabeledIcon title="TypeScript" iconFileName="typescript-logo.svg" />
+          <LabeledIcon title="Bootstrap" iconFileName="bootstrap-logo.svg" />
+          <LabeledIcon title="Sass/SCSS" iconFileName="sass-logo.png" />
+          <LabeledIcon title="ES6" />
+          <LabeledIcon title="Astro" />
+        </TitledContainer>
+        <TitledContainer title="Backend">
+          <LabeledIcon title="Django" />
+          <LabeledIcon title="PostgreSQL" />
+          <LabeledIcon title="Docker" />
+          <LabeledIcon title="Ubuntu" />
+          <LabeledIcon title="Nginx" />
+          <LabeledIcon title="DigitalOcean" />
+        </TitledContainer>
+        <TitledContainer title="Tooling">
+          <LabeledIcon title="PyCharm" />
+          <LabeledIcon title="VS Code" />
+          <LabeledIcon title="Git" />
+          <LabeledIcon title="GitHub" />
+          <LabeledIcon title="GitHub Actions" />
+          <LabeledIcon title="Bash" />
+        </TitledContainer>
+        <TitledContainer title="Principles" columns="4">
+          <LabeledIcon title="Agile" />
+          <LabeledIcon title="CI/CD" />
+          <LabeledIcon title="Git Flow" />
+          <LabeledIcon title="Mobile-First Design" iconFileName="mobile-first-logo.png" />
+          <LabeledIcon title="12-Factor Apps" iconFileName="12-factor-logo.png" />
+          <LabeledIcon title="SEO" />
+          <LabeledIcon title="Accessibility" />
+          <LabeledIcon title="REST Architecture" iconFileName="rest-logo.png" />
+        </TitledContainer>
+        <p>
+          My CV is
+          <SecureAnchor
+            href="https://docs.google.com/document/d/1OXhOpS_0R9XaxMbjMaMJuRj1WHKsW5dUWVgsK8_gLXg/edit?usp=sharing"
+          >available here</SecureAnchor>.
+          It contains a complete list of my skills and training.
+        </p>
+      </section>
+
+
+
+      <SectionHeading title="contact me" />		
+      
+      <section class="mx-auto">
+        <div class="row justify-content-center">
+          <div class="col-11 col-lg-3 mb-2">
+            <h2 class="text-primary">
+              Let's Connect!
+            </h2>
+            <p>
+              I'd love to answer any questions you have.
+            </p>
+          </div>
+          <div class="col-11 col-lg-9">
+            <ContactForm client:only target={ PUBLIC_CONTACT_FORM_TARGET }></ContactForm>
+          </div>
+        </div>
+      </section>
+
+
+    </div>
+
+
 	</div>
 
 	<script slot="pageScripts">
-		var scrollSpy = new bootstrap.ScrollSpy(document.body, {
+		new bootstrap.ScrollSpy(document.body, {
 			target: '#navbar',
 			offset: 90,
 		})
@@ -106,5 +128,8 @@ p:last-child {
 }
 textarea.form-control {
 	height: 15rem;
+}
+section {
+  max-width: 55rem;
 }
 </style>

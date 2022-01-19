@@ -1,0 +1,83 @@
+---
+import SectionLayout from '@layouts/SectionLayout.astro';
+
+import TitledContainer from '@components/TitledContainer.astro';
+import LabeledIcon from '@components/LabeledIcon.astro';
+import SecureAnchor from '@components/SecureAnchor.astro';
+
+// I use an array of category names instead of skills.keys
+// to guarantee a fixed presentation order.
+const skillCategories = [
+  'Frontend',
+  'Backend',
+  'Tooling',
+  'Principles',
+];
+
+const skills = {
+  "Frontend": [
+    ["Vue", "vue-logo.png"],
+    ["TypeScript", "typescript-logo.svg"],
+    ["Bootstrap", "bootstrap-logo.svg"],
+    ["Sass/SCSS", "sass-logo.png"],
+    ["ES6", "es6-logo.png"],
+    ["Astro", "astro-logo.png"],
+  ],
+  "Backend": [
+    ["Django", "django-logo.png"],
+    ["PostgreSQL", "postgresql-logo.png"],
+    ["Docker", "docker-logo.png"],
+    ["Ubuntu", "ubuntu-logo.png"],
+    ["Nginx", "nginx-logo.png"],
+    ["DigitalOcean", "digitalocean-logo.png"],
+  ],
+  "Tooling": [
+    ["PyCharm", "pycharm-logo.png"],
+    ["VS Code", "vs-code-logo.png"],
+    ["Git", "git-logo.png"],
+    ["GitHub", "github-logo.png"],
+    ["GitHub Actions", "github-actions-logo.png"],
+    ["Bash", "bash-logo.png"],
+  ],
+  "Principles": [
+    ['Agile', 'agile-logo.png'],
+    ['CI/CD', 'ci-cd-logo.png'],
+    // ['Git Flow', 'git-flow-logo.png'],
+    ['Mobile-First Design', 'mobile-first-logo.png'],
+    ['12-Factor Apps', '12-factor-logo.png'],
+    ['SEO', 'seo-logo.png'],
+    ['Accessibility', 'accessibility-logo.png'],
+    // ['REST Architecture', 'rest-logo.png'],
+  ],
+};
+---
+
+
+<SectionLayout title="My Skills" id="skills">
+
+  {skillCategories.map((category) => (
+
+    <TitledContainer title={category}>
+      <div class="row g-1">
+
+        {skills[category].map(([skill, logo]) => (
+          
+          <div class="col">
+            <LabeledIcon title={skill} icon={logo} />
+          </div>
+
+        ))}
+
+      </div>
+    </TitledContainer>
+
+  ))}
+  
+  <p>
+    My CV is
+    <SecureAnchor
+      href="https,//docs.google.com/document/d/1OXhOpS_0R9XaxMbjMaMJuRj1WHKsW5dUWVgsK8_gLXg/edit?usp=sharing"
+    >available here</SecureAnchor>.
+    It contains a complete list of my skills and training.
+  </p>
+</SectionLayout>
