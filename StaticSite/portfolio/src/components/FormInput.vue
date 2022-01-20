@@ -43,6 +43,7 @@ export default defineComponent({
 
       const typeSpecificAttrNames: InputAttributeDictionary = {
         textarea: ["minlength", "maxlength", "rows"],
+        text: ["minlength", "maxlength"],
       };
 
       const allAttrNames = new Set([
@@ -68,10 +69,21 @@ export default defineComponent({
 });
 </script>
 
+
+<style>
+textarea.form-control {
+  resize:vertical;
+  min-height: 7em;
+}
+</style>
+
+
+
+
 <template>
   <label
-    :for="attrs.id"
-    :class="{ 'visually-hidden': !attrs.standaloneLabel }"
+    v-bind:for="attrs.id"
+    v-bind:class="{ 'visually-hidden': !attrs.standaloneLabel }"
     class="form-control-label"
   >
     {{ attrs.label }}
@@ -83,24 +95,35 @@ export default defineComponent({
     https://bugs.chromium.org/p/chromium/issues/detail?id=423785
   
     For now, we'll fall back on [type=text] for email inputs.
+    We have custom email field validation, so the browser
+    default behavior has no effect either way.
   -->
   <input
     v-if="type !== 'textarea'"
     v-model.trim="_data"
-    :type="type !== 'email' ? type : 'text'"
-    :placeholder="attrs.standaloneLabel ? attrs.placeholder ?? '' : attrs.label"
+    v-bind:type="type !== 'email' ? type : 'text'"
+    v-bind:placeholder="attrs.standaloneLabel ? attrs.placeholder ?? '' : attrs.label"
     v-bind="attrs"
-    :class="{ 'is-invalid': error.length > 0 }"
+    v-bind:class="{ 'is-invalid': error.length > 0 }"
     class="form-control"
+    autocomplete="off"
   />
   <textarea
     v-else
     v-model.trim="_data"
-    :placeholder="attrs.standaloneLabel ? attrs.placeholder ?? '' : attrs.label"
+    v-bind:placeholder="attrs.standaloneLabel ? attrs.placeholder ?? '' : attrs.label"
     v-bind="attrs"
-    :class="{ 'is-invalid': error.length > 0 }"
+    v-bind:class="{ 'is-invalid': error.length > 0 }"
     class="form-control"
   />
 
-  <div class="invalid-feedback">{{ error }}</div>
+  <input 
+    readonly
+    disabled 
+    tabindex="-1"
+    class="invalid-feedback form-control-plaintext p-0 mx-0 mt-0" 
+    v-bind:value="error" 
+  />
 </template>
+
+

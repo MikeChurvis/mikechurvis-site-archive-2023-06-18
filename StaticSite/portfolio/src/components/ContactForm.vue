@@ -15,22 +15,14 @@ export default defineComponent({
   components: { FormInput },
   data() {
     return {
-      FormState,
+      FormState, // allows the FormState type to be used in the markup.
       formState: FormState.ReadyForInput,
+      
       formDef: {
-        name: {
-          maxlength: 120,
-        },
-        company: {
-          maxlength: 180,
-        },
-        email: {
-          maxlength: 320,
-        },
-        content: {
-          minlength: 20,
-          maxlength: 1000,
-        },
+        name: { maxlength: 120, },
+        company: { maxlength: 180, },
+        email: { maxlength: 320, },
+        content: { minlength: 20, maxlength: 1000, },
       },
       formData: {
         name: "",
@@ -39,7 +31,7 @@ export default defineComponent({
         content: "",
       },
       errors: {
-        name: "",
+        name: "testerror",
         company: "",
         email: "",
         content: "",
@@ -76,8 +68,8 @@ export default defineComponent({
       if (response.ok) {
         this.formState = FormState.Success;
         return;
-      } 
-      
+      }
+
       if (response.status !== 400) {
         this.formState = FormState.Error;
         console.error(response);
@@ -85,7 +77,7 @@ export default defineComponent({
       }
 
       const responseBody = await response.json();
-      this.reflectServerValidation(responseBody['validation_error']);
+      this.reflectServerValidation(responseBody["validation_error"]);
       this.formState = FormState.ReadyForInput;
     },
     reflectServerValidation: function (responseErrors: object): void {
@@ -150,95 +142,105 @@ export default defineComponent({
 
 
 <template>
-  <div class="">
-    <div
-      v-if="this.formState === this.FormState.Success"
-      class="p-5 alert alert-success"
-    >
-      <h1 class="mx-auto text-center">Message Sent</h1>
-    </div>
+  <div
+    v-if="this.formState === this.FormState.Success"
+    class="p-5 alert alert-success text-center"
+  >
+    <h1 class="mx-auto mb-3">Message Sent</h1>
 
-    <div 
-      v-else-if="this.formState === this.FormState.Error" 
-      class="p-5 alert alert-warning"
-    >
-      <h1 class="mx-auto text-center">Error</h1>
-      <div class="text-center">Something went wrong on our end. Please try again later.</div>
-    </div>
-
-    <fieldset
-      v-else
-      v-bind:disabled="this.formState !== this.FormState.ReadyForInput"
-    >
-      <div class="row g-2">
-        <div class="col-12">
-          <form-input
-            type="text"
-            v-model:data="formData.name"
-            v-model:error="errors.name"
-            v-bind="{ id: 'contact-form-name', label: 'Name' }"
-          />
-        </div>
-
-        <div class="col-12">
-          <form-input
-            type="text"
-            v-model:data="formData.company"
-            v-model:error="errors.company"
-            v-bind="{
-              id: 'contact-form-company',
-              label: 'Company (optional)',
-            }"
-          />
-        </div>
-
-        <div class="col-12">
-          <form-input
-            type="email"
-            v-model:data="formData.email"
-            v-model:error="errors.email"
-            v-bind="{ id: 'contact-form-email', label: 'Email' }"
-          />
-        </div>
-
-        <div class="col-12">
-          <form-input
-            type="textarea"
-            v-model:data="formData.content"
-            v-model:error="errors.content"
-            v-bind="{
-              id: 'contact-form-content',
-              label: 'Message',
-              minlength: 20,
-              maxlength: 1000,
-              rows: 4,
-            }"
-          />
-        </div>
-
-        <div class="col-12">
-          <button
-            v-on:click="submitForm()"
-            v-bind:class="
-              this.formState === this.FormState.ReadyForInput
-                ? 'btn-primary'
-                : 'btn-secondary'
-            "
-            class="btn btn-lg"
-          >
-            <div
-              v-if="this.formState !== this.FormState.ReadyForInput"
-              class="spinner-border spinner-border-sm"
-              role="status"
-            ></div>
-            {{
-              this.formState === this.FormState.ReadyForInput
-                ? "Submit"
-                : "Submitting..."
-            }}
-          </button>
-        </div>
-      </div>
-    </fieldset>
+    I'll reply to you via email as soon as I can. 
+    <br>
+    Thanks for stopping by!
   </div>
+
+  <div
+    v-else-if="this.formState === this.FormState.Error"
+    class="p-5 alert alert-warning text-center"
+  >
+    <h1 class="mx-auto mb-3">Error</h1>
+    
+    Something went wrong on our end.
+    <br>
+    Please try again later.
+  </div>
+
+  <fieldset
+    v-else
+    v-bind:disabled="this.formState !== this.FormState.ReadyForInput"
+  >
+    <div class="row g-2">
+      <div class="col-12">
+        <form-input
+          type="text"
+          v-model:data="formData.name"
+          v-model:error="errors.name"
+          v-bind="{ 
+            id: 'contact-form-name', 
+            label: 'Name',
+            maxlength: this.formDef.name.maxlength,
+          }"
+        />
+      </div>
+
+      <div class="col-12">
+        <form-input
+          type="text"
+          v-model:data="formData.company"
+          v-model:error="errors.company"
+          v-bind="{
+            id: 'contact-form-company',
+            label: 'Company (optional)',
+            maxlength: this.formDef.company.maxlength,
+          }"
+        />
+      </div>
+
+      <div class="col-12">
+        <form-input
+          type="email"
+          v-model:data="formData.email"
+          v-model:error="errors.email"
+          v-bind="{ id: 'contact-form-email', label: 'Email' }"
+        />
+      </div>
+
+      <div class="col-12">
+        <form-input
+          type="textarea"
+          v-model:data="formData.content"
+          v-model:error="errors.content"
+          v-bind="{
+            id: 'contact-form-content',
+            label: 'Message',
+            minlength: 20,
+            maxlength: 1000,
+            rows: 4,
+          }"
+        />
+      </div>
+
+      <div class="col-12">
+        <button
+          v-on:click="submitForm()"
+          v-bind:class="
+            this.formState === this.FormState.ReadyForInput
+              ? 'btn-primary'
+              : 'btn-secondary'
+          "
+          class="btn btn-lg"
+        >
+          <div
+            v-if="this.formState !== this.FormState.ReadyForInput"
+            class="spinner-border spinner-border-sm"
+            role="status"
+          ></div>
+          {{
+            this.formState === this.FormState.ReadyForInput
+              ? "Submit"
+              : "Submitting..."
+          }}
+        </button>
+      </div>
+    </div>
+  </fieldset>
 </template>

@@ -27,9 +27,10 @@ const skills = {
     ["Django", "django-logo.png"],
     ["PostgreSQL", "postgresql-logo.png"],
     ["Docker", "docker-logo.png"],
-    ["Ubuntu", "ubuntu-logo.png"],
+    ["Redis", "redis-logo.png"],
     ["Nginx", "nginx-logo.png"],
     ["DigitalOcean", "digitalocean-logo.png"],
+    // ["Ubuntu", "ubuntu-logo.png"],
   ],
   "Tooling": [
     ["PyCharm", "pycharm-logo.png"],
@@ -40,13 +41,13 @@ const skills = {
     ["Bash", "bash-logo.png"],
   ],
   "Principles": [
-    ['Agile', 'agile-logo.png'],
-    ['CI/CD', 'ci-cd-logo.png'],
-    // ['Git Flow', 'git-flow-logo.png'],
     ['Mobile-First Design', 'mobile-first-logo.png'],
-    ['12-Factor Apps', '12-factor-logo.png'],
-    ['SEO', 'seo-logo.png'],
+    ['12-Factor Methodology', '12-factor-logo.png'],
+    ['Continuous Integration', 'ci-cd-logo.png'],
+    ['Agile', 'agile-logo.png'],
+    ['Search Engine Optimization', 'seo-logo.png'],
     ['Accessibility', 'accessibility-logo.png'],
+    // ['Git Flow', 'git-flow-logo.png'],
     // ['REST Architecture', 'rest-logo.png'],
   ],
 };
@@ -58,11 +59,11 @@ const skills = {
   {skillCategories.map((category) => (
 
     <TitledContainer title={category}>
-      <div class="row g-1">
+      <div class="row">
 
         {skills[category].map(([skill, logo]) => (
           
-          <div class="col">
+          <div class="col p-2">
             <LabeledIcon title={skill} icon={logo} />
           </div>
 

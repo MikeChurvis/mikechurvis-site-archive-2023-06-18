@@ -20,3 +20,9 @@
 }
 
 @import '../../node_modules/bootstrap/scss/bootstrap';
+
+// Reserve validation label height
+.invalid-feedback {
+    display: block;
+    margin-bottom: .2em;
+  }
