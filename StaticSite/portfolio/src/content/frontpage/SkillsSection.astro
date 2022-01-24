@@ -1,12 +1,12 @@
 ---
-import SectionLayout from '@layouts/SectionLayout.astro';
+import SectionLayout from '@/layouts/SectionLayout.astro';
 
-import TitledContainer from '@components/TitledContainer.astro';
-import LabeledIcon from '@components/LabeledIcon.astro';
-import SecureAnchor from '@components/SecureAnchor.astro';
+import TitledContainer from '@/components/TitledContainer.astro';
+import LabeledIcon from '@/components/LabeledIcon.astro';
+import SecureAnchor from '@/components/SecureAnchor.astro';
 
-// I use an array of category names instead of skills.keys
-// to guarantee a fixed presentation order.
+// Use of an categories array instead of skills.keys
+// guarantees a fixed presentation order.
 const skillCategories = [
   'Frontend',
   'Backend',
@@ -45,7 +45,7 @@ const skills = {
     ['12-Factor Methodology', '12-factor-logo.png'],
     ['Continuous Integration', 'ci-cd-logo.png'],
     ['Agile', 'agile-logo.png'],
-    ['Search Engine Optimization', 'seo-logo.png'],
+    ['SEO', 'seo-logo.png'],
     ['Accessibility', 'accessibility-logo.png'],
     // ['Git Flow', 'git-flow-logo.png'],
     // ['REST Architecture', 'rest-logo.png'],

@@ -19,7 +19,7 @@ export default defineComponent({
       default: "",
     },
   },
-  emits: ["update:data", "update:error"],
+  emits: ["update:data", "update:error", "blur"],
   inheritAttrs: false,
   computed: {
     _data: {
@@ -101,6 +101,7 @@ textarea.form-control {
   <input
     v-if="type !== 'textarea'"
     v-model.trim="_data"
+    v-on:blur="$emit('blur', $event)"
     v-bind:type="type !== 'email' ? type : 'text'"
     v-bind:placeholder="attrs.standaloneLabel ? attrs.placeholder ?? '' : attrs.label"
     v-bind="attrs"
@@ -111,6 +112,7 @@ textarea.form-control {
   <textarea
     v-else
     v-model.trim="_data"
+    v-on:blur="$emit('blur', $event)"
     v-bind:placeholder="attrs.standaloneLabel ? attrs.placeholder ?? '' : attrs.label"
     v-bind="attrs"
     v-bind:class="{ 'is-invalid': error.length > 0 }"

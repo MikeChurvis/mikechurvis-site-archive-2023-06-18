@@ -1,14 +1,20 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import FormInput from "@components/FormInput.vue";
-import { postContactFormDataFactory } from "@scripts/contact-form";
+import FormInput from "@/components/FormInput.vue";
+import { postContactFormDataFactory } from "@/scripts/contact-form";
+import {
+  validateName,
+  validateCompany,
+  validateEmail,
+  validateContent,
+} from "@/scripts/contact-form/validation";
 
-const FormState = {
-  ReadyForInput: "ready",
-  SubmissionPending: "pending",
-  Success: "success",
-  Error: "error",
-} as const;
+enum FormState {
+  ReadyForInput = "ready",
+  SubmissionPending = "pending",
+  Success = "success",
+  Error = "error",
+}
 
 export default defineComponent({
   name: "ContactForm",
@@ -16,124 +22,94 @@ export default defineComponent({
   data() {
     return {
       FormState, // allows the FormState type to be used in the markup.
-      formState: FormState.ReadyForInput,
-      
-      formDef: {
-        name: { maxlength: 120, },
-        company: { maxlength: 180, },
-        email: { maxlength: 320, },
-        content: { minlength: 20, maxlength: 1000, },
-      },
-      formData: {
-        name: "",
-        company: "",
-        email: "",
-        content: "",
-      },
-      errors: {
-        name: "testerror",
-        company: "",
-        email: "",
-        content: "",
-      },
       postFormData: postContactFormDataFactory(
         { ...this.$props }.target // spread-copy disables reactivity
       ),
+
+      formState: FormState.ReadyForInput,
+
+      form: {
+        name: {
+          value: "",
+          error: "",
+          maxlength: 120,
+        },
+        company: {
+          value: "",
+          error: "",
+          maxlength: 180,
+        },
+        email: {
+          value: "",
+          error: "",
+          maxlength: 320,
+        },
+        content: {
+          value: "",
+          error: "",
+          minlength: 20,
+          maxlength: 1000,
+        },
+      },
     };
   },
   props: {
-    target: { type: String, required: true },
+    target: {
+      type: String,
+      required: true,
+    },
   },
   methods: {
+    validateName,
+    validateCompany,
+    validateEmail,
+    validateContent,
     submitForm: async function (): Promise<void> {
       this.formState = FormState.SubmissionPending;
 
-      this.doClientValidation();
+      const allFieldsAreValid = [
+        this.validateName(),
+        this.validateCompany(),
+        this.validateEmail(),
+        this.validateContent(),
+      ].every((fieldIsValid) => fieldIsValid);
 
-      if (Object.values(this.errors).some((err: string) => err.length > 0)) {
+      if (!allFieldsAreValid) {
         this.formState = FormState.ReadyForInput;
         return;
       }
 
+      const formData = {
+        name: this.form.name.value,
+        company: this.form.company.value,
+        email: this.form.email.value,
+        content: this.form.content.value,
+      };
+
       let response: Response;
 
       try {
-        response = await this.postFormData(this.formData);
-      } catch (error) {
-        console.error(error);
+        response = await this.postFormData(formData);
+      } catch (networkError) {
         this.formState = FormState.Error;
+        console.warn(networkError);
         return;
       }
 
-      if (response.ok) {
-        this.formState = FormState.Success;
+      if (!response.ok) {
+        this.reflectServerValidationErrors(await response.json());
+        this.formState = FormState.ReadyForInput;
         return;
       }
 
-      if (response.status !== 400) {
-        this.formState = FormState.Error;
-        console.error(response);
-        return;
-      }
-
-      const responseBody = await response.json();
-      this.reflectServerValidation(responseBody["validation_error"]);
-      this.formState = FormState.ReadyForInput;
+      this.formState = FormState.Success;
     },
-    reflectServerValidation: function (responseErrors: object): void {
-      for (const field in responseErrors) {
-        // response: { 'field': ['error1', 'error2', ...], ... }
-        this.errors[field] = responseErrors[field][0];
-      }
-    },
-    doClientValidation: function (): void {
-      const name = this.formData.name.trim();
-      const company = this.formData.company.trim();
-      const email = this.formData.email.trim();
-      const content = this.formData.content.trim();
+    reflectServerValidation: function (response: any): void {
+      const errors = response.validation_errors;
 
-      this.formData.name = name;
-      this.formData.company = company;
-      this.formData.email = email;
-      this.formData.content = content;
-
-      // HORRIBLE efficiency regexp. Causes page to hang on long email addresses.
-      /* const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; */
-
-      // This is sufficient for client validation. Django will validate more deeply with its built-in validator.
-      const emailRegexp = /[^@]+@[^.]+\..*/;
-
-      const errorMsg = {
-        required: () => "This field is required.",
-        badEmail: () => "Please enter a valid email address.",
-        tooShort: (length: number) =>
-          `Must contain at least ${length} characters.`,
-        tooLong: (length: number) =>
-          `May contain no more than ${length} characters.`,
-      };
-
-      if (name.length === 0) {
-        this.errors.name = errorMsg.required();
-      } else if (name.length > this.formDef.name.maxlength) {
-        this.errors.name = errorMsg.tooLong(this.formDef.name.maxlength);
-      }
-
-      if (company.length > this.formDef.company.maxlength) {
-        this.errors.company = errorMsg.tooLong(this.formDef.name.maxlength);
-      }
-
-      if (email.length === 0) {
-        this.errors.email = errorMsg.required();
-      } else if (email.length > this.formDef.email.maxlength) {
-        this.errors.email = errorMsg.tooLong(this.formDef.email.maxlength);
-      } else if (!emailRegexp.test(email)) {
-        this.errors.email = errorMsg.badEmail();
-      }
-
-      if (content.length < this.formDef.content.minlength) {
-        this.errors.content = errorMsg.tooShort(this.formDef.content.minlength);
-      } else if (content.length > this.formDef.content.maxlength) {
-        this.errors.content = errorMsg.tooLong(this.formDef.content.maxlength);
+      for (const field in errors) {
+        // validation_errors: { 'field': ['error1', 'error2', ...], ... }
+        this.form[field].error = errors[field][0];
       }
     },
   },
@@ -143,77 +119,78 @@ export default defineComponent({
 
 <template>
   <div
-    v-if="this.formState === this.FormState.Success"
+    v-if="formState === FormState.Success"
     class="p-5 alert alert-success text-center"
   >
     <h1 class="mx-auto mb-3">Message Sent</h1>
 
-    I'll reply to you via email as soon as I can. 
-    <br>
+    I'll reply to you via email as soon as I can.
+    <br />
     Thanks for stopping by!
   </div>
 
   <div
-    v-else-if="this.formState === this.FormState.Error"
+    v-else-if="formState === FormState.Error"
     class="p-5 alert alert-warning text-center"
   >
     <h1 class="mx-auto mb-3">Error</h1>
-    
+
     Something went wrong on our end.
-    <br>
+    <br />
     Please try again later.
   </div>
 
-  <fieldset
-    v-else
-    v-bind:disabled="this.formState !== this.FormState.ReadyForInput"
-  >
+  <fieldset v-else v-bind:disabled="formState !== FormState.ReadyForInput">
     <div class="row g-2">
       <div class="col-12">
-        <form-input
+        <FormInput
           type="text"
-          v-model:data="formData.name"
-          v-model:error="errors.name"
-          v-bind="{ 
-            id: 'contact-form-name', 
+          v-model:data="form.name.value"
+          v-model:error="form.name.error"
+          v-on:blur="validateName()"
+          v-bind="{
+            id: 'contact-form-name',
             label: 'Name',
-            maxlength: this.formDef.name.maxlength,
+            maxlength: form.name.maxlength,
           }"
         />
       </div>
 
       <div class="col-12">
-        <form-input
+        <FormInput
           type="text"
-          v-model:data="formData.company"
-          v-model:error="errors.company"
+          v-model:data="form.company.value"
+          v-model:error="form.company.error"
+          v-on:blur="validateCompany()"
           v-bind="{
             id: 'contact-form-company',
             label: 'Company (optional)',
-            maxlength: this.formDef.company.maxlength,
+            maxlength: form.company.maxlength,
           }"
         />
       </div>
 
       <div class="col-12">
-        <form-input
+        <FormInput
           type="email"
-          v-model:data="formData.email"
-          v-model:error="errors.email"
+          v-model:data="form.email.value"
+          v-model:error="form.email.error"
+          v-on:blur="validateEmail()"
           v-bind="{ id: 'contact-form-email', label: 'Email' }"
         />
       </div>
 
       <div class="col-12">
-        <form-input
+        <FormInput
           type="textarea"
-          v-model:data="formData.content"
-          v-model:error="errors.content"
+          v-model:data="form.content.value"
+          v-model:error="form.content.error"
+          v-on:blur="validateContent()"
           v-bind="{
             id: 'contact-form-content',
             label: 'Message',
-            minlength: 20,
-            maxlength: 1000,
+            minlength: form.content.minlength,
+            maxlength: form.content.maxlength,
             rows: 4,
           }"
         />
@@ -223,21 +200,19 @@ export default defineComponent({
         <button
           v-on:click="submitForm()"
           v-bind:class="
-            this.formState === this.FormState.ReadyForInput
+            formState === FormState.ReadyForInput
               ? 'btn-primary'
               : 'btn-secondary'
           "
           class="btn btn-lg"
         >
           <div
-            v-if="this.formState !== this.FormState.ReadyForInput"
+            v-if="formState !== FormState.ReadyForInput"
             class="spinner-border spinner-border-sm"
             role="status"
           ></div>
           {{
-            this.formState === this.FormState.ReadyForInput
-              ? "Submit"
-              : "Submitting..."
+            formState === FormState.ReadyForInput ? "Submit" : "Submitting..."
           }}
         </button>
       </div>

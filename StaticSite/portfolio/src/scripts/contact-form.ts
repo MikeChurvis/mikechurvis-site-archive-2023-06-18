@@ -1,4 +1,4 @@
-import { delayPromise } from "@scripts/main";
+import { delayPromise } from "@/scripts/main";
 
 
 export type MessageData = {
