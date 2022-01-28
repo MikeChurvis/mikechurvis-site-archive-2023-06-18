@@ -25,8 +25,8 @@ const skills = {
   ],
   "Backend": [
     ["Django", "django-logo.png"],
-    ["PostgreSQL", "postgresql-logo.png"],
     ["Docker", "docker-logo.png"],
+    ["PostgreSQL", "postgresql-logo.png"],
     ["Redis", "redis-logo.png"],
     ["Nginx", "nginx-logo.png"],
     ["DigitalOcean", "digitalocean-logo.png"],
@@ -42,11 +42,12 @@ const skills = {
   ],
   "Principles": [
     ['Mobile-First Design', 'mobile-first-logo.png'],
-    ['12-Factor Methodology', '12-factor-logo.png'],
-    ['Continuous Integration', 'ci-cd-logo.png'],
-    ['Agile', 'agile-logo.png'],
-    ['SEO', 'seo-logo.png'],
     ['Accessibility', 'accessibility-logo.png'],
+    ['Containerization', 'container-icon.png'],
+    ['Continuous Integration', 'ci-cd-logo.png'],
+    ['Search Engine Optimization', 'seo-logo.png'],
+    ['12-Factor Methodology', '12-factor-logo.png'],
+    // ['Agile', 'agile-logo.png'],
     // ['Git Flow', 'git-flow-logo.png'],
     // ['REST Architecture', 'rest-logo.png'],
   ],
@@ -63,7 +64,7 @@ const skills = {
 
         {skills[category].map(([skill, logo]) => (
           
-          <div class="col p-2">
+          <div class="col-4 col-md py-2">
             <LabeledIcon title={skill} icon={logo} />
           </div>
 
@@ -74,10 +75,22 @@ const skills = {
 
   ))}
   
+  <br>
+
+  <p>
+    Check out this website's 
+    <SecureAnchor 
+      dest="GitHub" 
+      href="https://github.com/MikeChurvis/mikechurvis.github.io"
+    >GitHub repository</SecureAnchor>
+    to see all of the above in action.
+  </p>
+
   <p>
     My CV is
     <SecureAnchor
-      href="https,//docs.google.com/document/d/1OXhOpS_0R9XaxMbjMaMJuRj1WHKsW5dUWVgsK8_gLXg/edit?usp=sharing"
+      dest="Google Docs"
+      href="https://docs.google.com/document/d/1OXhOpS_0R9XaxMbjMaMJuRj1WHKsW5dUWVgsK8_gLXg/edit?usp=sharing"
     >available here</SecureAnchor>.
     It contains a complete list of my skills and training.
   </p>

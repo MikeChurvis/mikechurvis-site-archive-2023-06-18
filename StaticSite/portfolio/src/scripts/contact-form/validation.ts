@@ -7,6 +7,7 @@ const errorMsg = {
   badEmail: () => "Please enter a valid email address.",
 };
 
+/* */
 function validateName(): boolean {
   if (this.form.name.value.length === 0) {
     this.form.name.error = errorMsg.required("Name");
@@ -60,19 +61,19 @@ function validateEmail(): boolean {
   return true;
 }
 
-function validateContent(): boolean {
-  if (this.form.content.value.length < this.form.content.minlength) {
-    this.form.content.error = errorMsg.tooShort(
+function validateMessageContent(): boolean {
+  if (this.form.messageContent.value.length < this.form.messageContent.minlength) {
+    this.form.messageContent.error = errorMsg.tooShort(
       "Message content",
-      this.form.content.minlength
+      this.form.messageContent.minlength
     );
     return false;
   }
 
-  if (this.form.content.value.length > this.form.content.maxlength) {
-    this.form.content = errorMsg.tooLong(
+  if (this.form.messageContent.value.length > this.form.messageContent.maxlength) {
+    this.form.messageContent = errorMsg.tooLong(
       "Message content",
-      this.form.content.maxlength
+      this.form.messageContent.maxlength
     );
     return false;
   }
@@ -80,4 +81,4 @@ function validateContent(): boolean {
   return true;
 }
 
-export { validateName, validateCompany, validateEmail, validateContent }
+export { validateName, validateCompany, validateEmail, validateMessageContent }

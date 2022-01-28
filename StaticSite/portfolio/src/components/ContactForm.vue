@@ -1,12 +1,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import FormInput from "@/components/FormInput.vue";
-import { postContactFormDataFactory } from "@/scripts/contact-form";
 import {
   validateName,
   validateCompany,
   validateEmail,
-  validateContent,
+  validateMessageContent,
 } from "@/scripts/contact-form/validation";
 
 enum FormState {
@@ -22,9 +21,6 @@ export default defineComponent({
   data() {
     return {
       FormState, // allows the FormState type to be used in the markup.
-      postFormData: postContactFormDataFactory(
-        { ...this.$props }.target // spread-copy disables reactivity
-      ),
 
       formState: FormState.ReadyForInput,
 
@@ -44,7 +40,7 @@ export default defineComponent({
           error: "",
           maxlength: 320,
         },
-        content: {
+        messageContent: {
           value: "",
           error: "",
           minlength: 20,
@@ -63,7 +59,7 @@ export default defineComponent({
     validateName,
     validateCompany,
     validateEmail,
-    validateContent,
+    validateMessageContent,
     submitForm: async function (): Promise<void> {
       this.formState = FormState.SubmissionPending;
 
@@ -71,7 +67,7 @@ export default defineComponent({
         this.validateName(),
         this.validateCompany(),
         this.validateEmail(),
-        this.validateContent(),
+        this.validateMessageContent(),
       ].every((fieldIsValid) => fieldIsValid);
 
       if (!allFieldsAreValid) {
@@ -83,13 +79,20 @@ export default defineComponent({
         name: this.form.name.value,
         company: this.form.company.value,
         email: this.form.email.value,
-        content: this.form.content.value,
+        messageContent: this.form.messageContent.value,
       };
 
       let response: Response;
 
       try {
-        response = await this.postFormData(formData);
+        response = await fetch(this.target, {
+          method: "POST",
+          headers: {
+            "Access-Control-Allow-Origin": origin,
+          },
+          credentials: "same-origin",
+          body: JSON.stringify(formData),
+        });
       } catch (networkError) {
         this.formState = FormState.Error;
         console.warn(networkError);
@@ -97,18 +100,25 @@ export default defineComponent({
       }
 
       if (!response.ok) {
-        this.reflectServerValidationErrors(await response.json());
+        const responseBody = await response.json();
+
+        if (!responseBody.hasOwnProperty("validation_errors")) {
+          console.warn("Invalid response from server. Response body:");
+          console.warn(responseBody);
+          this.formState = FormState.Error;
+          return;
+        }
+
+        this.reflectServerValidationErrors(responseBody.validation_errors);
         this.formState = FormState.ReadyForInput;
         return;
       }
 
       this.formState = FormState.Success;
     },
-    reflectServerValidation: function (response: any): void {
-      const errors = response.validation_errors;
-
+    reflectServerValidation: function (errors: any): void {
       for (const field in errors) {
-        // validation_errors: { 'field': ['error1', 'error2', ...], ... }
+        // errors: { 'field': ['error1', 'error2', ...], ... }
         this.form[field].error = errors[field][0];
       }
     },
@@ -183,14 +193,14 @@ export default defineComponent({
       <div class="col-12">
         <FormInput
           type="textarea"
-          v-model:data="form.content.value"
-          v-model:error="form.content.error"
+          v-model:data="form.messageContent.value"
+          v-model:error="form.messageContent.error"
           v-on:blur="validateContent()"
           v-bind="{
-            id: 'contact-form-content',
+            id: 'contact-form-messagecontent',
             label: 'Message',
-            minlength: form.content.minlength,
-            maxlength: form.content.maxlength,
+            minlength: form.messageContent.minlength,
+            maxlength: form.messageContent.maxlength,
             rows: 4,
           }"
         />

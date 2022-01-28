@@ -4,7 +4,10 @@ export interface Props {
   _class?: string;
 }
 
-const { href, class: _class = "" } = Astro.props;
+const { href, dest, class: _class = "", hasIcon = true } = Astro.props;
+
+// 16777215 = 16^6-1 = a 6-digit hex number
+const randomId = Math.floor(Math.random()*16777215).toString(16);
 ---
 
 <!--
@@ -19,4 +22,10 @@ https://www.freecodecamp.org/news/how-to-use-html-to-open-link-in-new-tab/#secur
   class={_class} 
   target="_blank" 
   rel="noreferrer noopener"
-><slot/></a>
+  aria-describedby={randomId}
+  title={dest ? `Opens ${dest} in a new tab` : "Opens a new tab"}
+><slot/>{
+  hasIcon 
+    ? <i class="bi bi-box-arrow-up-right ms-2"></i> 
+    : <></>
+}</a><span hidden id={randomId}></span>
