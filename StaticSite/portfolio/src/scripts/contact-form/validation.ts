@@ -1,3 +1,12 @@
+export {
+  validateName,
+  validateCompany,
+  validateEmail,
+  validateMessageContent,
+}
+
+import { FormData } from "./types"
+
 const errorMsg = {
   required: (fieldName) => `${fieldName} is required.`,
   tooLong: (fieldName, length) =>
@@ -5,80 +14,104 @@ const errorMsg = {
   tooShort: (fieldName, length) =>
     `${fieldName} must be at least ${length} characters long.`,
   badEmail: () => "Please enter a valid email address.",
-};
+}
 
-/* */
-function validateName(): boolean {
-  if (this.form.name.value.length === 0) {
-    this.form.name.error = errorMsg.required("Name");
-    return false;
+/** Returns true if the name field is all of the following:
+ * - present
+ * - shorter than maxlength
+ * 
+ * Otherwise, returns false and sets the field's validation label.
+ * */
+function validateName(form: FormData): boolean {
+  if (form.name.value.length === 0) {
+    form.name.error = errorMsg.required("Name")
+    return false
   }
 
-  if (this.form.name.value.length > this.form.name.maxlength) {
-    this.form.name.error = errorMsg.tooLong(
+  if (form.name.value.length > form.name.maxlength) {
+    form.name.error = errorMsg.tooLong(
       "Name",
-      this.form.name.maxlength
-    );
-    return false;
+      form.name.maxlength
+    )
+    return false
   }
 
-  return true;
+  return true
 }
 
-function validateCompany(): boolean {
-  if (this.form.company.value.length > this.form.company.maxlength) {
-    this.form.company.error = errorMsg.tooLong(
+/** Returns true if the company field is all of the following:
+ * - shorter than maxlength
+ * 
+ * Otherwise, returns false and sets the field's validation label.
+ * */
+function validateCompany(form: FormData): boolean {
+  if (form.company.value.length > form.company.maxlength) {
+    form.company.error = errorMsg.tooLong(
       "Company name",
-      this.form.company.maxlength
-    );
-    return false;
+      form.company.maxlength
+    )
+    return false
   }
 
-  return true;
+  return true
 }
 
-function validateEmail(): boolean {
-  const emailRegexp = /[^@]+@[^.]+\..*/;
+/** Returns true if the name field is all of the following:
+ * - present
+ * - shorter than maxlength
+ * - a valid email address according to the IETF*
+ * 
+ * Otherwise, returns false and sets the field's validation label.
+ * 
+ * \*see: https://tools.ietf.org/id/draft-seantek-mail-regexen-03.html#rfc.section.3.1.4
+ * */
+function validateEmail(form: FormData): boolean {
+  const emailRegexp = /[^@]+@[^.]+\..*/
 
-  if (this.form.email.value.length === 0) {
-    this.form.email.error = errorMsg.required("Email address");
-    return false;
+  if (form.email.value.length === 0) {
+    form.email.error = errorMsg.required("Email address")
+    return false
   }
 
-  if (this.form.email.value.length > this.form.email.maxlength) {
-    this.form.email.error = errorMsg.tooLong(
+  if (form.email.value.length > form.email.maxlength) {
+    form.email.error = errorMsg.tooLong(
       "Email address",
-      this.form.email.maxlength
-    );
-    return false;
+      form.email.maxlength
+    )
+    return false
   }
 
-  if (!emailRegexp.test(this.form.email.value)) {
-    this.form.email.error = errorMsg.badEmail();
-    return false;
+  if (!emailRegexp.test(form.email.value)) {
+    form.email.error = errorMsg.badEmail()
+    return false
   }
 
-  return true;
+  return true
 }
 
-function validateMessageContent(): boolean {
-  if (this.form.messageContent.value.length < this.form.messageContent.minlength) {
-    this.form.messageContent.error = errorMsg.tooShort(
+/** Returns true if the messageContent field is all of the following:
+ * - longer than minlength
+ * - shorter than maxlength
+ * 
+ * Otherwise, returns false and sets the field's validation label.
+ * */
+function validateMessageContent(form: FormData): boolean {
+  if (form.messageContent.value.length < form.messageContent.minlength) {
+    form.messageContent.error = errorMsg.tooShort(
       "Message content",
-      this.form.messageContent.minlength
-    );
-    return false;
+      form.messageContent.minlength
+    )
+    return false
   }
 
-  if (this.form.messageContent.value.length > this.form.messageContent.maxlength) {
-    this.form.messageContent = errorMsg.tooLong(
+  if (form.messageContent.value.length > form.messageContent.maxlength) {
+    form.messageContent.error = errorMsg.tooLong(
       "Message content",
-      this.form.messageContent.maxlength
-    );
-    return false;
+      form.messageContent.maxlength
+    )
+    return false
   }
 
-  return true;
+  return true
 }
 
-export { validateName, validateCompany, validateEmail, validateMessageContent }
