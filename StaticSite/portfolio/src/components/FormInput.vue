@@ -64,33 +64,41 @@ textarea.form-control {
     Our custom email field validation overrides the browser
     default behavior anyway.
   -->
-  <input
-    v-if="type !== 'textarea'"
-    v-model.trim="fieldValue"
-    v-on:blur="emit('blur', $event)"
-    v-bind:type="type !== 'email' ? type : 'text'"
-    v-bind:placeholder="label"
-    v-bind:class="{ 'is-invalid': error.length > 0 }"
-    v-bind="attrs"
-    class="form-control"
-    autocomplete="off"
-  />
   <textarea
+    v-if="type == 'textarea'"
+    v-model.trim="fieldValue"
+    v-bind="attrs"
+    :placeholder="label"
+    :class="{ 'is-invalid': error.length > 0 }"
+    class="form-control"
+    @blur="emit('blur', $event)"
+  ></textarea>
+  <input
     v-else
     v-model.trim="fieldValue"
-    v-on:blur="emit('blur', $event)"
-    v-bind:placeholder="label"
-    v-bind:class="{ 'is-invalid': error.length > 0 }"
     v-bind="attrs"
+    :type="type == 'email' ? 'text' : type"
+    :placeholder="label"
+    :class="{ 'is-invalid': error.length > 0 }"
     class="form-control"
-  ></textarea>
+    autocomplete="off"
+    @blur="emit('blur', $event)"
+  />
 
+  <!-- 
+    An <input> reserves its space when empty. I use it as a
+    validation label to prevent the form from suddenly resizing
+    when error text appears.
+
+    This is an important accessibility concern, especially for
+    people who prefer reduced UI motion for medical reasons.
+  -->
   <input
     readonly
     disabled
     tabindex="-1"
     class="invalid-feedback form-control-plaintext p-0 mx-0 mt-0"
-    v-bind:value="error"
+    :value="error"
   />
 </template>
 
