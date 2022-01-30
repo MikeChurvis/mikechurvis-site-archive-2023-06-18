@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
-import { withDefaults, computed } from "vue"
+import { withDefaults, computed, useAttrs } from "vue"
 import { FormInputType } from "@/scripts/contact-form/types"
-import { generateRandomId } from "@/scripts/main";
+import { generateRandomId } from "@/scripts/utils";
 
 // ATTRIBUTES ////
 
@@ -14,10 +14,12 @@ const props = withDefaults(defineProps<{
   id?: string
 }>(), {
   type: "text",
-  value: "",
+  // value: "",
   error: "",
   id: generateRandomId(),
 })
+
+const attrs = useAttrs()
 
 // EMITTED EVENTS ////
 
@@ -51,14 +53,16 @@ textarea.form-control {
 <template>
   <label v-bind:for="id" class="form-control-label visually-hidden">{{ label }}</label>
 
-  <!-- regression bug in chrome version 40+: 
+  <!-- 
+    REGRESSION BUG in Chromium version 40+: 
+    
     input[type=email] will not update its visual appearance
     when its value is trimmed. This is a known issue:
     https://bugs.chromium.org/p/chromium/issues/detail?id=423785
   
-    For now, we'll fall back on [type=text] for email inputs.
-    We have custom email field validation, so the browser
-    default behavior has no effect either way.
+    For now we'll fall back on [type=text] for email inputs.
+    Our custom email field validation overrides the browser
+    default behavior anyway.
   -->
   <input
     v-if="type !== 'textarea'"
@@ -67,6 +71,7 @@ textarea.form-control {
     v-bind:type="type !== 'email' ? type : 'text'"
     v-bind:placeholder="label"
     v-bind:class="{ 'is-invalid': error.length > 0 }"
+    v-bind="attrs"
     class="form-control"
     autocomplete="off"
   />
@@ -76,8 +81,9 @@ textarea.form-control {
     v-on:blur="emit('blur', $event)"
     v-bind:placeholder="label"
     v-bind:class="{ 'is-invalid': error.length > 0 }"
-    class="form-control" 
-  />
+    v-bind="attrs"
+    class="form-control"
+  ></textarea>
 
   <input
     readonly

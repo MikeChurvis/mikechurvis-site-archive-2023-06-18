@@ -7,10 +7,10 @@ import {
   validateCompany,
   validateEmail,
   validateMessageContent,
-} from "@/scripts/contact-form/validation"
+} from "@/scripts/contact-form/validators"
 import { FormData, FormState } from "@/scripts/contact-form/types"
 
-// PROPERTIES ////
+// ATTRIBUTES ////
 
 const props = withDefaults(defineProps<{
   target: string
@@ -25,30 +25,33 @@ const formState = ref(FormState.ReadyForInput)
 
 const form: FormData = reactive({
   name: {
-    value: ref(""),
-    error: ref(""),
-    maxlength: ref(120),
+    value: "",
+    error: "",
+    maxlength: 120,
   },
   company: {
-    value: ref(""),
-    error: ref(""),
-    maxlength: ref(180),
+    value: "",
+    error: "",
+    maxlength: 180,
   },
   email: {
-    value: ref(""),
-    error: ref(""),
-    maxlength: ref(320),
+    value: "",
+    error: "",
+    maxlength: 320,
   },
   messageContent: {
-    value: ref(""),
-    error: ref(""),
-    minlength: ref(20),
-    maxlength: ref(1000),
+    value: "",
+    error: "",
+    minlength: 20,
+    maxlength: 1000,
   },
 })
 
 // METHODS ////
 
+/** 
+ * Validates all fields and sends the form data to the server. 
+ */
 async function submitForm(): Promise<void> {
   formState.value = FormState.SubmissionPending
 
@@ -106,6 +109,9 @@ async function submitForm(): Promise<void> {
   formState.value = FormState.Success
 }
 
+/** 
+ * Populates field validation labels with their respective error text. 
+ */
 function displayServerValidationErrorsInForm(errors: any): void {
   for (const field in errors) {
     // errors: { 'field': ['error1', 'error2', ...], ... }
@@ -118,75 +124,75 @@ function displayServerValidationErrorsInForm(errors: any): void {
 
 <template>
   <div v-if="formState === FormState.Success" class="p-5 alert alert-success text-center">
-    <h1 class="mx-auto mb-3">Message Sent</h1>I'll reply to you via email as soon as I can.
-    <br />Thanks for stopping by!
+    <h1 class="mx-auto mb-3">Message Sent</h1>
+    <span>I'll reply to you via email as soon as I can.</span>
+    <br />
+    <span>Thanks for stopping by!</span>
   </div>
 
   <div v-else-if="formState === FormState.Error" class="p-5 alert alert-warning text-center">
-    <h1 class="mx-auto mb-3">Error</h1>Something went wrong on our end.
-    <br />Please try again later.
+    <h1 class="mx-auto mb-3">Error</h1>
+    <span>Something went wrong on our end.</span>
+    <br />
+    <span>Please try again later.</span>
   </div>
 
-  <fieldset v-else v-bind:disabled="formState !== FormState.ReadyForInput">
+  <fieldset v-else :disabled="formState !== FormState.ReadyForInput">
     <div class="row g-2">
       <div class="col-12">
         <FormInput
           type="text"
-          v-model:data="form.name.value"
+          v-model:value="form.name.value"
           v-model:error="form.name.error"
-          v-on:blur="validateName(form)"
-          v-bind="{
-            id: 'contact-form-name',
-            label: 'Name',
-            maxlength: form.name.maxlength,
-          }"
+          id="contact-form-name"
+          label="Name"
+          :maxlength="form.name.maxlength"
+          @blur="validateName(form)"
         />
       </div>
 
       <div class="col-12">
         <FormInput
+          label="Company (optional)"
           type="text"
-          v-model:data="form.company.value"
+          id="contact-form-company"
+          v-model:value="form.company.value"
           v-model:error="form.company.error"
-          v-on:blur="validateCompany(form)"
-          v-bind="{
-            id: 'contact-form-company',
-            label: 'Company (optional)',
-            maxlength: form.company.maxlength,
-          }"
+          :maxlength="form.company.maxlength"
+          @blur="validateCompany(form)"
         />
       </div>
 
       <div class="col-12">
         <FormInput
+          label="Email"
           type="email"
-          v-model:data="form.email.value"
+          id="contact-form-email"
+          v-model:value="form.email.value"
           v-model:error="form.email.error"
-          v-on:blur="validateEmail(form)"
-          v-bind="{ id: 'contact-form-email', label: 'Email' }"
+          :maxlength="form.email.maxlength"
+          @blur="validateEmail(form)"
         />
       </div>
 
       <div class="col-12">
         <FormInput
+          label="Message"
           type="textarea"
-          v-model:data="form.messageContent.value"
+          id="contact-form-messagecontent"
+          v-model:value="form.messageContent.value"
           v-model:error="form.messageContent.error"
+          :minlength="form.messageContent.minlength"
+          :maxlength="form.messageContent.maxlength"
+          :rows="4"
           v-on:blur="validateMessageContent(form)"
-          v-bind="{
-            id: 'contact-form-messagecontent',
-            label: 'Message',
-            minlength: form.messageContent.minlength,
-            maxlength: form.messageContent.maxlength,
-            rows: 4,
-          }"
         />
       </div>
 
       <div class="col-12">
         <button
-          v-on:click="submitForm()"
-          v-bind:class="
+          @click="submitForm()"
+          :class="
             formState === FormState.ReadyForInput
               ? 'btn-primary'
               : 'btn-secondary'

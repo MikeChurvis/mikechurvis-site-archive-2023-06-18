@@ -4,10 +4,9 @@ export interface Props {
   _class?: string;
 }
 
-import { generateRandomId } from "@/scripts/main"
+import { generateRandomId } from "@/scripts/utils"
 
 const { href, dest, class: _class = "", hasIcon = true } = Astro.props;
-
 
 const randomId = generateRandomId();
 ---
