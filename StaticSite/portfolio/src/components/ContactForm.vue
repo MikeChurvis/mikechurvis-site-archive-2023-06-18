@@ -98,7 +98,7 @@ async function submitForm(): Promise<void> {
       console.warn("Invalid response from server. Response body:")
       console.warn(responseBody)
       formState.value = FormState.Error
-      return;
+      return
     }
 
     displayServerValidationErrorsInForm(responseBody.validation_errors)
