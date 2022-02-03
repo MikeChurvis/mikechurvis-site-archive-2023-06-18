@@ -5,12 +5,12 @@ from django.db import models
 
 
 class Message(models.Model):
-    name = models.CharField(max_length=100)
-    company = models.CharField(max_length=100, blank=True)
+    name = models.CharField(max_length=120)
+    company = models.CharField(max_length=180, blank=True)
     email = models.EmailField()
     content = models.TextField()
     sent_at = models.DateTimeField(auto_now_add=True)
-    email_status = models.CharField(max_length=1000, default='none')
+    email_status = models.CharField(max_length=1000, default='')
 
     class Meta:
         ordering = ['sent_at']

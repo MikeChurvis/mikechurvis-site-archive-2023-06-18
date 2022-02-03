@@ -13,9 +13,17 @@ services:
       - .env
     depends_on: 
       - redis
+      - postgres
 
   redis:
     image: redis:6-alpine
+
+  postgres:
+    image: postgres:13.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env
 
   celery:
     <<: *web
@@ -35,3 +43,6 @@ services:
       - web
       - redis
       - celery
+
+volumes:
+  postgres_data:

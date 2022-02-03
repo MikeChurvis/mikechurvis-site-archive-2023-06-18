@@ -8,6 +8,11 @@ import {
   validateEmail,
   validateMessageContent,
 } from "@/scripts/contact-form/validators"
+import {
+  cleanNameFieldInput,
+  cleanCompanyFieldInput,
+  cleanEmailFieldInput,
+} from "@/scripts/contact-form/field-input-cleaners"
 import { FormData, FormState } from "@/scripts/contact-form/types"
 
 // ATTRIBUTES ////
@@ -94,14 +99,14 @@ async function submitForm(): Promise<void> {
   if (!response.ok) {
     const responseBody = await response.json()
 
-    if (!responseBody.hasOwnProperty("validation_errors")) {
+    if (!responseBody.hasOwnProperty("errors")) {
       console.warn("Invalid response from server. Response body:")
       console.warn(responseBody)
       formState.value = FormState.Error
       return
     }
 
-    displayServerValidationErrorsInForm(responseBody.validation_errors)
+    displayServerValidationErrorsInForm(responseBody.errors)
     formState.value = FormState.ReadyForInput
     return
   }
@@ -148,6 +153,7 @@ function displayServerValidationErrorsInForm(errors: any): void {
           label="Name"
           :maxlength="form.name.maxlength"
           @blur="validateName(form)"
+          @input="cleanNameFieldInput"
         />
       </div>
 
@@ -160,6 +166,7 @@ function displayServerValidationErrorsInForm(errors: any): void {
           v-model:error="form.company.error"
           :maxlength="form.company.maxlength"
           @blur="validateCompany(form)"
+          @input="cleanCompanyFieldInput"
         />
       </div>
 
@@ -172,6 +179,7 @@ function displayServerValidationErrorsInForm(errors: any): void {
           v-model:error="form.email.error"
           :maxlength="form.email.maxlength"
           @blur="validateEmail(form)"
+          @input="cleanEmailFieldInput"
         />
       </div>
 
@@ -185,7 +193,7 @@ function displayServerValidationErrorsInForm(errors: any): void {
           :minlength="form.messageContent.minlength"
           :maxlength="form.messageContent.maxlength"
           :rows="4"
-          v-on:blur="validateMessageContent(form)"
+          @blur="validateMessageContent(form)"
         />
       </div>
 
@@ -197,7 +205,7 @@ function displayServerValidationErrorsInForm(errors: any): void {
               ? 'btn-primary'
               : 'btn-secondary'
           "
-          class="btn btn-lg"
+          class="btn btn-lg w-100 mt-1"
         >
           <div
             v-if="formState !== FormState.ReadyForInput"

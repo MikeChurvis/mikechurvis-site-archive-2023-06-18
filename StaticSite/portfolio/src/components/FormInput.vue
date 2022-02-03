@@ -27,6 +27,7 @@ const emit = defineEmits<{
   (e: 'update:value', newValue: any): void
   (e: 'update:error', newError: string): void
   (e: 'blur', event: FocusEvent): void
+  (e: 'input', event: Event): void
 }>()
 
 // COMPUTED VALUES ////
@@ -72,6 +73,7 @@ textarea.form-control {
     :class="{ 'is-invalid': error.length > 0 }"
     class="form-control"
     @blur="emit('blur', $event)"
+    @input="emit('input', $event)"
   ></textarea>
   <input
     v-else
@@ -83,6 +85,7 @@ textarea.form-control {
     class="form-control"
     autocomplete="off"
     @blur="emit('blur', $event)"
+    @input="emit('input', $event)"
   />
 
   <!-- 

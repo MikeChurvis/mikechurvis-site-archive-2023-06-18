@@ -8,6 +8,11 @@ from .models import Message
 
 @shared_task
 def queue_send_message_as_email(message_id):
+    """
+    Takes the message with the given id and sends it as an email to the recipients
+    specified in `settings.py`. This is a long-running async task that
+    executes outside the HTTP request/response cycle.
+    """
     message = Message.objects.get(id=message_id)
     
     try:
@@ -30,6 +35,7 @@ def queue_send_message_as_email(message_id):
     except smtplib.SMTPException as exc:
         message.email_status = f"ERROR: SMTPException ({str(type(exc))})"
     finally:
+        message.email_status = message.email_status[:1001]
         message.save()
     
     print(f'message (id:{message.id}) email sent')

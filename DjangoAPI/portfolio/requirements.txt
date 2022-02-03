@@ -3,3 +3,4 @@ django-cors-headers
 redis
 celery
 flower
+psycopg2-binary

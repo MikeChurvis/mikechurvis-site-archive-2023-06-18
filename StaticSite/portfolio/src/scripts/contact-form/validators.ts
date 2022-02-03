@@ -66,7 +66,7 @@ function validateCompany(form: FormData): boolean {
  * \*see: https://tools.ietf.org/id/draft-seantek-mail-regexen-03.html#rfc.section.3.1.4
  * */
 function validateEmail(form: FormData): boolean {
-  const emailRegexp = /[^@]+@[^.]+\..*/
+  const emailRegexp = /^([a-zA-Z0-9_+-]+\.)*[a-zA-Z0-9_+-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z]+$/
 
   if (form.email.value.length === 0) {
     form.email.error = errorMsg.required("Email address")
