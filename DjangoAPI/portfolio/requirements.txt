@@ -1,6 +1,0 @@
-Django<4
-django-cors-headers
-redis
-celery
-flower
-psycopg2-binary
