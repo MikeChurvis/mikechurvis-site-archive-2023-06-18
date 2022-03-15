@@ -2,44 +2,61 @@ version: '3'
 
 services:
 
-  web: &web
+  django: &django
+    container_name: portfolio-django
     build: ./portfolio
+    command: python manage.py runserver 0.0.0.0:8000
     ports:
       - 8000:8000
-    env_file: 
-      - .env.backend
+    env_file:
+      - ../env/shared.env
+      - ../env/backend.env    
+    environment:
+      - DJANGO_DEBUG=1
     depends_on: 
       - redis
       - postgres
 
   redis:
+    container_name: portfolio-redis
     image: redis:6-alpine
 
   postgres:
     image: postgres:13.0-alpine
+    restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - .env.backend
+      - ../env/shared.env
+      - ../env/backend.env
+    environment:
+      - POSTGRES_USER="${DB_USER}"
+      - POSTGRES_DB="${DB_NAME}"
+      - POSTGRES_PASSWORD="${DB_PASSWORD}"
+      - POSTGRES_HOST="${DB_HOST}"
+      - POSTGRES_PORT="${DB_PORT}"
 
   celery:
-    <<: *web
+    <<: *django
+    container_name: portfolio-celery
     command: celery -A portfolio worker --loglevel=info --logfile=logs/celery.log
     ports: []
     depends_on:
-      - web
+      - django
       - redis
+      - postgres
 
   flower:
-    <<: *web
+    <<: *django
+    container_name: portfolio-flower
     command: celery -A portfolio --broker=${CELERY_BROKER} flower --port=5555 
-    volumes: []
     ports:
       - 5555:5555
     depends_on:
-      - web
+      - django
       - redis
       - celery
+      - postgres
 
 volumes:
   postgres_data:

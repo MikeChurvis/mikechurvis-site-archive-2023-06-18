@@ -1,4 +1,2 @@
-.env.secret
-.env.*.secret
-.env.local
-.env.*.local
+*.env
+*.env-pass

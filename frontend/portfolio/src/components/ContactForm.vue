@@ -58,7 +58,7 @@ const form: FormData = reactive({
   email: {
     value: "",
     error: "",
-    maxlength: props.overrides?.company?.maxlength ?? 320,
+    maxlength: props.overrides?.email?.maxlength ?? 320,
   },
   messageContent: {
     value: "",

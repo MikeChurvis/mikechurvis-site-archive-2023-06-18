@@ -1,14 +1,33 @@
-from enum import Enum
+import os
 
 from django import forms
+from django.core.validators import RegexValidator, MinLengthValidator, MaxLengthValidator
 from django.db import models
+
+env = os.environ.get
 
 
 class Message(models.Model):
-    name = models.CharField(max_length=120)
-    company = models.CharField(max_length=180, blank=True)
-    email = models.EmailField()
-    content = models.TextField()
+    name = models.CharField(
+        max_length=int(env('CONTACT_FORM_NAME_MAXLENGTH'))
+    )
+    company = models.CharField(
+        max_length=int(env('CONTACT_FORM_COMPANY_MAXLENGTH')), 
+        blank=True
+    )
+    email = models.CharField(
+        max_length=int(env('CONTACT_FORM_EMAIL_MAXLENGTH')),
+        validators=[RegexValidator(
+            regex=env('CONTACT_FORM_EMAIL_REGEX'),
+            message="Please enter a valid email address."
+        )]
+    )
+    content = models.TextField(
+        validators=[
+            MinLengthValidator(int(env('CONTACT_FORM_MESSAGE_CONTENT_MINLENGTH'))),
+            MaxLengthValidator(int(env('CONTACT_FORM_MESSAGE_CONTENT_MAXLENGTH')))
+        ]
+    )
     sent_at = models.DateTimeField(auto_now_add=True)
     email_status = models.CharField(max_length=1000, default='')
 
