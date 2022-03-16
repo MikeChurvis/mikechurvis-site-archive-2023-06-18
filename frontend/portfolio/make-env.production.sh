@@ -10,3 +10,5 @@ trap 'cd "${_ORIGINAL_DIR}"' exit
 cd "$1"
 
 cat shared.env shared.production.env frontend.env frontend.production.env > "${_ORIGINAL_DIR}/.env"
+
+cd "${_ORIGINAL_DIR}"
