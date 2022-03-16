@@ -11,14 +11,15 @@ jobs:
       - name: Print the current working directory to the build console.
         run: pwd && ls -a
       - name: Copy the backend files onto remote server.
+        env:
+          HOST: ${{ secrets.DROPLET_IP }}
+          USERNAME: ${{ secrets.SSH_USER }}
+          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         uses: appleboy/scp-action@master
         with:
-          source: "./backend"
+          source: backend/
           target: "~/portfolio/backend"
           rm: true
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          username: ${{ secrets.SSH_USER }}
-          host: ${{ secrets.DROPLET_IP }}
       - name: Build images, run containers.
         uses: appleboy/ssh-action@master
         with:
