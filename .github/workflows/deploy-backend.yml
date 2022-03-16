@@ -33,5 +33,4 @@ jobs:
             docker compose \
             -f docker-compose.yaml \
             -f docker-compose.production.yaml \
-            --env-file ~/portfolio/backend/.env \
             up --build --detach
