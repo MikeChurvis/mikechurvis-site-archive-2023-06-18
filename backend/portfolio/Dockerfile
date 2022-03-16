@@ -14,6 +14,7 @@ COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY ./entrypoint.sh .
+RUN ["chmod", "+x", "/usr/src/portfolio/entrypoint.sh"]
 COPY . .
 
 ENTRYPOINT ["/usr/src/portfolio/entrypoint.sh"]
