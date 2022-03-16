@@ -16,13 +16,11 @@ jobs:
           host: ${{ secrets.DROPLET_IP }}
           username: ${{ secrets.SSH_USER }}
           privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           rmRemote: true
       - name: Build images, run containers.
         uses: appleboy/ssh-action@master
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           username: ${{ secrets.SSH_USER }}
           host: ${{ secrets.DROPLET_IP }}
           script: |
