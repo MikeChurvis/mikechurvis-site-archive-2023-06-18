@@ -4,11 +4,7 @@ set -o errexit
 set -o pipefail
 set -o allexport
 
-_ORIGINAL_DIR=$(pwd)
-trap 'cd "${_ORIGINAL_DIR}"' exit
-
-cd "$1"
-
-cat shared.env backend.env > "${_ORIGINAL_DIR}/.env"
-
-cd "${_ORIGINAL_DIR}"
+cat \
+"$1/shared.env" \
+"$1/backend.env" \
+> "$2/.env"

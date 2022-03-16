@@ -29,7 +29,7 @@ jobs:
           host: ${{ secrets.DROPLET_IP }}
           script: |
             cd ~/portfolio/backend
-            source make-env.production.sh ../env
+            source make-env.production.sh ../env .
             docker compose \
             -f docker-compose.yaml \
             -f docker-compose.production.yaml \
