@@ -33,5 +33,5 @@ jobs:
             docker compose \
             -f docker-compose.yml \
             -f docker-compose.production.yml \
-            --env-file ./.env \
+            --env-file .env \
             up --build --detach
