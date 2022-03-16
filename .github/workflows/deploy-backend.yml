@@ -13,7 +13,7 @@ jobs:
       - name: Copy the backend files onto remote server.
         uses: appleboy/scp-action@master
         with:
-          source: "backend/*"
+          source: "./backend"
           target: "~/portfolio/backend"
           rm: true
           key: ${{ secrets.SSH_PRIVATE_KEY }}
