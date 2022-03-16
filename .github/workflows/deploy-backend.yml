@@ -18,8 +18,8 @@ jobs:
           KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         uses: appleboy/scp-action@master
         with:
-          source: backend/
-          target: "~/portfolio/"
+          source: backend/*
+          target: ~/portfolio/backend/
           rm: true
       - name: Build images, run containers.
         uses: appleboy/ssh-action@master
