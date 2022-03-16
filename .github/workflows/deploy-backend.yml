@@ -13,7 +13,7 @@ jobs:
       - name: Copy the backend files onto remote server.
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: backend
+          local: /home/runner/work/mikechurvis.github.io/mikechurvis.github.io/backend
           remote: ~/portfolio/backend
           host: ${{ secrets.DROPLET_IP }}
           username: ${{ secrets.SSH_USER }}
