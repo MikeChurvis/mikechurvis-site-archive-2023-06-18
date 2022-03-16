@@ -8,6 +8,7 @@ jobs:
     name: Deploy the portfolio website backend.
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Print the current working directory to the build console.
         run: pwd && ls -a
       - name: Copy the backend files onto remote server.
