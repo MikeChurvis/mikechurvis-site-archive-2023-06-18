@@ -4,11 +4,12 @@ version: '3'
 services:
   
   redis:
-    container_name: portfolio-redis
     image: redis:6-alpine
+    container_name: portfolio-redis
 
   postgres:
     image: postgres:13.0-alpine
+    container_name: portfolio-postgres
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
@@ -25,6 +26,8 @@ services:
     env_file:
       - .env
     command: [python, manage.py, runserver, 0.0.0.0:8000]
+    volumes:
+      - ./portfolio:/usr/src/portfolio
     ports:
       - 8000:8000
     environment:
@@ -40,6 +43,7 @@ services:
       celery, -A, portfolio,
       worker, --loglevel=info, --logfile=logs/celery.log
     ]
+    ports: []
     depends_on:
       - django
         
