@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "source make-env.sh ../../env && astro dev",
-    "start": "source make-env.sh ../../env && astro dev",
-    "build": "source make-env.production.sh ../../env && astro build && touch dist/.nojekyll",
+    "dev": "source make-env.sh ../../env-source && astro dev",
+    "start": "source make-env.sh ../../env-source && astro dev",
+    "build": "source make-env.prod.sh ../../env-source && astro build && touch dist/.nojekyll",
     "preview": "astro preview"
   },
   "devDependencies": {

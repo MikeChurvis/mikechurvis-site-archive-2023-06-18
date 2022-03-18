@@ -4,11 +4,12 @@ version: '3'
 services:
   
   redis:
-    container_name: portfolio-redis
     image: redis:6-alpine
+    container_name: portfolio-redis
 
   postgres:
-    image: postgres:13.0-alpine
+    image: postgres:13-alpine
+    container_name: portfolio-postgres
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
@@ -18,21 +19,28 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_HOST=${DB_HOST}
       - POSTGRES_PORT=${DB_PORT}
+
+  nginx:
+    image: mikechurvis/portfolio:nginx-latest
+    container_name: portfolio-nginx
+    ports:
+      - 80:80
+    volumes:
+      - static_files:/var/www/portfolio/static
+    depends_on:
+      - django
+      - flower
   
   django: &django
-    build: ./portfolio
+    image: mikechurvis/portfolio:django-latest
     container_name: portfolio-django
     env_file:
       - .env
-    command: 
-      - python 
-      - manage.py 
-      - runserver 
+    command:
+      - gunicorn
+      - portfolio.wsgi:application
+      - --bind
       - 0.0.0.0:8000
-    ports:
-      - 8000:8000
-    environment:
-      - DJANGO_DEBUG=1
     depends_on: 
       - redis
       - postgres
@@ -49,7 +57,7 @@ services:
       - --logfile=logs/celery.log
     depends_on:
       - django
-        
+
   flower:
     <<: *django
     container_name: portfolio-flower
@@ -60,11 +68,10 @@ services:
       - --broker=${CELERY_BROKER}
       - flower
       - --port=5555
-    ports:
-      - 5555:5555
     depends_on:
       - celery
-  
-  
+
+
 volumes:
   postgres_data:
+  static_files:

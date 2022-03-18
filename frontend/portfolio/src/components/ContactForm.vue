@@ -17,9 +17,9 @@ import { FormData, FormState } from "@/scripts/contact-form/types"
 
 // ATTRIBUTES ////
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   target: string
-  origin?: string
+  origin: string
   overrides?: {
     name?: {
       maxlength?: number
@@ -36,9 +36,7 @@ const props = withDefaults(defineProps<{
       maxlength?: number
     }
   }
-}>(), {
-  origin: 'http://localhost:3000/'
-})
+}>()
 
 // DATA ////
 
