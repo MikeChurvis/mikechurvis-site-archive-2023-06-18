@@ -36,11 +36,14 @@ services:
     container_name: portfolio-django
     env_file:
       - .env
-    command:
-      - gunicorn
-      - portfolio.wsgi:application
-      - --bind
-      - 0.0.0.0:8000
+    command: [
+      gunicorn, portfolio.wsgi:application,
+      --bind, 0.0.0.0:8000,
+      --timeout, '90',
+      --workers, '3',
+      --worker-class, gevent,
+      --log-level, debug
+    ]
     depends_on: 
       - redis
       - postgres
@@ -48,26 +51,21 @@ services:
   celery:
     <<: *django
     container_name: portfolio-celery
-    command:
-      - celery
-      - -A
-      - portfolio
-      - worker
-      - --loglevel=info
-      - --logfile=logs/celery.log
+    command: [
+      celery, -A, portfolio, 
+      worker, --loglevel=info, --logfile=logs/celery.log
+    ]
     depends_on:
       - django
 
   flower:
     <<: *django
     container_name: portfolio-flower
-    command:
-      - celery
-      - -A
-      - portfolio
-      - --broker=${CELERY_BROKER}
-      - flower
-      - --port=5555
+    command: [
+      celery, -A, portfolio,
+      "--broker=${CELERY_BROKER}",
+      flower, --port=5555
+    ]
     depends_on:
       - celery
 
