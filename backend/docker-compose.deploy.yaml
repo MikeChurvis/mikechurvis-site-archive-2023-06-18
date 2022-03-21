@@ -25,6 +25,7 @@ services:
     container_name: portfolio-nginx
     ports:
       - 80:80
+      - 433:433
     volumes:
       - static_files:/var/www/portfolio/static
     depends_on:
