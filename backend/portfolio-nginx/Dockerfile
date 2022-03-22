@@ -2,6 +2,7 @@ FROM nginx:1-alpine
 
 RUN apk add certbot certbot-nginx \
   && rm /etc/nginx/conf.d/default.conf \
-  && mkdir /etc/letsencrypt
+  && mkdir /etc/letsencrypt \
+  && mkdir /var/www/portfolio/acme-challenge
   
 COPY nginx.conf /etc/nginx/conf.d

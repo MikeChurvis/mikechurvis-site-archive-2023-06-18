@@ -29,6 +29,7 @@ services:
     volumes:
       - static_files:/var/www/portfolio/static
       - letsencrypt:/etc/letsencrypt
+      - acme_challenge:/var/www/portfolio/acme-challenge
     depends_on:
       - django
       - flower
@@ -76,3 +77,4 @@ volumes:
   postgres_data:
   static_files:
   letsencrypt:
+  acme_challenge:
