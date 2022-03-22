@@ -28,18 +28,10 @@ services:
       - 433:433
     volumes:
       - static_files:/var/www/portfolio/static
-      - /etc/letsencrypt/live/api.mikechurvis.com:/etc/letsencrypt/live/api.mikechurvis.com
+      - letsencrypt:/etc/letsencrypt
     depends_on:
       - django
       - flower
-  
-  certbot:
-    image: certbot/certbot
-    container_name: portfolio-certbot
-    environment:
-      CERTBOT_EMAIL: mikechurvis@gmail.com
-    volumes:
-      - letsencrypt:/etc/letsencrypt
   
   django: &django
     image: mikechurvis/portfolio:django-latest
@@ -83,3 +75,4 @@ services:
 volumes:
   postgres_data:
   static_files:
+  letsencrypt:
