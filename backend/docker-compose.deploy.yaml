@@ -59,7 +59,7 @@ services:
     command: [
       celery, -A, portfolio, 
       worker, 
-      --pool=solo
+      --pool=solo,
       --loglevel=info, 
       --logfile=logs/celery.log
     ]
