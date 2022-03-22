@@ -25,7 +25,7 @@ services:
     container_name: portfolio-nginx
     ports:
       - 80:80
-      - 433:433
+      - 443:443
     volumes:
       - static_files:/var/www/html/static
       - ~/portfolio/letsencrypt:/etc/letsencrypt
