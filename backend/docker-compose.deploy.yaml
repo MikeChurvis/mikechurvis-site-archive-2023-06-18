@@ -58,7 +58,10 @@ services:
     container_name: portfolio-celery
     command: [
       celery, -A, portfolio, 
-      worker, --loglevel=info, --logfile=logs/celery.log
+      worker, 
+      --pool=solo
+      --loglevel=info, 
+      --logfile=logs/celery.log
     ]
     depends_on:
       - django
