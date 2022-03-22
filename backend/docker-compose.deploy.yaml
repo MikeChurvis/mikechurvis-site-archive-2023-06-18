@@ -28,7 +28,7 @@ services:
       - 433:433
     volumes:
       - static_files:/var/www/html/static
-      - /etc/live/letsencrypt:/etc/live/letsencrypt
+      - /etc/letsencrypt/live:/etc/letsencrypt/live
       - /var/www/letsencrypt:/var/www/letsencrypt
     depends_on:
       - django
