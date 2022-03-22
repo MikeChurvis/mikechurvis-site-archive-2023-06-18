@@ -29,6 +29,7 @@ services:
     volumes:
       - static_files:/var/www/html/static
       - /etc/live/letsencrypt:/etc/live/letsencrypt
+      - /var/www/letsencrypt:/var/www/letsencrypt
     depends_on:
       - django
       - flower
