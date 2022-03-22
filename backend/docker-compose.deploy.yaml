@@ -27,9 +27,8 @@ services:
       - 80:80
       - 433:433
     volumes:
-      - static_files:/usr/src/portfolio/staticfiles
+      - static_files:${DJANGO_STATIC_ROOT}
       - letsencrypt:/etc/letsencrypt
-      - acme_challenge:/var/www/portfolio/acme-challenge
     depends_on:
       - django
       - flower
@@ -40,7 +39,7 @@ services:
     env_file:
       - .env
     volumes:
-      - static_files:/usr/src/portfolio/staticfiles
+      - static_files:${DJANGO_STATIC_ROOT}
     command: [
       gunicorn, portfolio.wsgi:application,
       --bind, 0.0.0.0:8000,
@@ -71,8 +70,6 @@ services:
       "--broker=${CELERY_BROKER}",
       flower, --port=5555
     ]
-    volumes:
-      - static_files:/usr/src/portfolio/staticfiles
     depends_on:
       - celery
 
@@ -81,4 +78,3 @@ volumes:
   postgres_data:
   static_files:
   letsencrypt:
-  acme_challenge:
