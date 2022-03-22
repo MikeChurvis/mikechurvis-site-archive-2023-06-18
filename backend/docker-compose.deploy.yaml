@@ -27,8 +27,8 @@ services:
       - 80:80
       - 433:433
     volumes:
-      - static_files:${DJANGO_STATIC_ROOT}
-      - letsencrypt:/etc/letsencrypt
+      - static_files:/var/www/html/static
+      - letsencrypt:/var/www/letsencrypt
     depends_on:
       - django
       - flower
@@ -39,7 +39,7 @@ services:
     env_file:
       - .env
     volumes:
-      - static_files:${DJANGO_STATIC_ROOT}
+      - static_files:/usr/src/portfolio/staticfiles
     command: [
       gunicorn, portfolio.wsgi:application,
       --bind, 0.0.0.0:8000,
