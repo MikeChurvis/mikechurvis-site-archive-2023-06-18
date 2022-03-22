@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "source make-env.sh ../../env-source && astro dev",
     "start": "source make-env.sh ../../env-source && astro dev",
-    "build": "source make-env.prod.sh ../../env-source && astro build && touch dist/.nojekyll",
+    "build": "source npm-run-build.sh",
     "preview": "astro preview"
   },
   "devDependencies": {

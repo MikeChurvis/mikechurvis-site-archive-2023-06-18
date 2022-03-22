@@ -18,7 +18,7 @@ def queue_send_message_as_email(message_id):
     try:
         send_mail(
             from_email=settings.EMAIL_HOST_USER,
-            recipient_list=settings.EMAIL_RECIPIENT_ADDRESS,
+            recipient_list=settings.EMAIL_RECIPIENT_ADDRESS_LIST,
             subject=message.subject,
             message=message.body,
             fail_silently=False,
