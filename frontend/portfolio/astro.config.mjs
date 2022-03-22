@@ -17,7 +17,7 @@ export default /** @type {import('astro').AstroUserConfig} */ ({
   },
   buildOptions: {
     out: "dist",
-    site: "https://mikechurvis.github.io",
+    site: "https://mikechurvis.com",
     sourcemap: true,
   },
 });
