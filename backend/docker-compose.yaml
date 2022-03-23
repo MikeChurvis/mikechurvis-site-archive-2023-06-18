@@ -28,10 +28,13 @@ services:
     command: [python, manage.py, runserver, 0.0.0.0:8000]
     volumes:
       - ./portfolio:/usr/src/portfolio
+      - ./.credentials:/.credentials
     ports:
       - 8000:8000
     environment:
       - DJANGO_DEBUG=1
+    secrets:
+      - google_client_secret
     depends_on: 
       - redis
       - postgres
@@ -63,3 +66,8 @@ services:
   
 volumes:
   postgres_data:
+    
+    
+secrets:
+  google_client_secret:
+    file: ./google_client.secret

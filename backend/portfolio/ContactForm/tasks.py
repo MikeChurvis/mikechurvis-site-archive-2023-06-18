@@ -1,42 +1,40 @@
-import smtplib
-
 from celery import shared_task
-from django.core.mail import send_mail
 from django.conf import settings
 
 from .models import Message
+import gmail
+
 
 @shared_task
 def queue_send_message_as_email(message_id):
     """
     Takes the message with the given id and sends it as an email to the recipients
     specified in `settings.py`. This is a long-running async task that
-    executes outside the HTTP request/response cycle.
+    executes outside of the HTTP request/response cycle.
     """
     message = Message.objects.get(id=message_id)
-    
+
     try:
-        send_mail(
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=settings.EMAIL_RECIPIENT_ADDRESS_LIST,
-            subject=message.subject,
-            message=message.body,
-            fail_silently=False,
-        )
+        for recipient_address in settings.EMAIL_RECIPIENT_ADDRESS_LIST:
+            message_raw = gmail.create_message(
+                sender=settings.EMAIL_SENDER_ADDRESS,
+                receiver=recipient_address,
+                subject=message.subject,
+                message_content=message.body
+            )
+
+            gmail.send_message(
+                credentials_filepath=settings.GOOGLE_CLIENT_SECRET_FILEPATH,
+                message=message_raw,
+                token_output_path=settings.GOOGLE_CLIENT_TOKEN_FILEPATH,
+            )
+
         message.email_status = 'success'
-    except smtplib.SMTPServerDisconnected:
-        message.email_status = f"ERROR: Server Disconnected"
-    except smtplib.SMTPSenderRefused as exc:
-        message.email_status = f"ERROR: Sender Refused ({exc.sender}, {exc.smtp_error})"
-    except smtplib.SMTPRecipientsRefused as exc:
-        message.email_status = f"ERROR: Recipients Refused ({exc.recipients})"
-    except smtplib.SMTPResponseException as exc:
-        message.email_status = f"ERROR: SMTPResponseException ({exc.smtp_code}: {exc.smtp_error})"
-    except smtplib.SMTPException as exc:
-        message.email_status = f"ERROR: SMTPException ({str(type(exc))})"
+    except gmail.HttpError as error:
+        message.email_status = f"{str(type(error))} {error.status_code}: ({error.error_details})"
     finally:
         message.email_status = message.email_status[:1001]
         message.save()
-    
-    print(f'message (id:{message.id}) email sent')
+
+    print(f'message {message.id} status: {message.email_status}')
     return True

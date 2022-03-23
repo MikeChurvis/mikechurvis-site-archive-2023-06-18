@@ -6,3 +6,6 @@ flower
 psycopg2-binary
 gunicorn
 gevent
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib

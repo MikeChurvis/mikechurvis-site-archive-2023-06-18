@@ -49,6 +49,8 @@ services:
       --worker-class, gevent,
       --log-level, debug
     ]
+    secrets:
+      - google_client_secret
     depends_on: 
       - redis
       - postgres
@@ -81,3 +83,8 @@ services:
 volumes:
   postgres_data:
   static_files:
+
+
+secrets:
+  google_client_secret:
+    file: ./google_client.secret

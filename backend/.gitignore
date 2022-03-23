@@ -7,4 +7,5 @@ staticfiles
 
 logs/
 
-google-api-key.secret
+*.secret
+client_secret.json
