@@ -28,13 +28,10 @@ services:
     command: [python, manage.py, runserver, 0.0.0.0:8000]
     volumes:
       - ./portfolio:/usr/src/portfolio
-      - ./.credentials:/.credentials
     ports:
       - 8000:8000
     environment:
       - DJANGO_DEBUG=1
-    secrets:
-      - google_client_secret
     depends_on: 
       - redis
       - postgres
@@ -47,8 +44,6 @@ services:
       worker, --loglevel=info, --logfile=logs/celery.log
     ]
     ports: []
-    depends_on:
-      - django
         
   flower:
     <<: *django
@@ -60,14 +55,7 @@ services:
     ]
     ports:
       - 5555:5555
-    depends_on:
-      - celery
   
   
 volumes:
   postgres_data:
-    
-    
-secrets:
-  google_client_secret:
-    file: ./google_client.secret

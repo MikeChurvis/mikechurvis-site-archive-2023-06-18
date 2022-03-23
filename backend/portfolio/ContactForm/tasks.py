@@ -2,7 +2,7 @@ from celery import shared_task
 from django.conf import settings
 
 from .models import Message
-import gmail
+from . import gmail
 
 
 @shared_task
@@ -26,7 +26,7 @@ def queue_send_message_as_email(message_id):
             gmail.send_message(
                 credentials_filepath=settings.GOOGLE_CLIENT_SECRET_FILEPATH,
                 message=message_raw,
-                token_output_path=settings.GOOGLE_CLIENT_TOKEN_FILEPATH,
+                token_output_path=settings.GOOGLE_CLIENT_TOKEN_FOLDER,
             )
 
         message.email_status = 'success'
