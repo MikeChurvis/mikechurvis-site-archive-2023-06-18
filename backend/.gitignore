@@ -6,3 +6,5 @@ db.sqlite3
 staticfiles
 
 logs/
+
+google-api-key.secret
