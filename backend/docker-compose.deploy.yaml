@@ -39,6 +39,9 @@ services:
     container_name: portfolio-django
     env_file:
       - .env
+    expose:
+      - "5000"
+      - "8000"
     volumes:
       - static_files:/usr/src/portfolio/staticfiles
     command: [
