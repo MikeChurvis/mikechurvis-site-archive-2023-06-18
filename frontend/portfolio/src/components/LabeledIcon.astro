@@ -1,28 +1,30 @@
 ---
-const { title, icon } = Astro.props;
-const directoryPrefix = '../images/logos/';
+const { title, iconPath } = Astro.props;
 ---
 
 
-<div class="col mt-2">
+<div class="labelled-icon col mt-2">
   
   <div class="d-flex justify-content-center mb-1">
     <img 
-      src={Astro.resolve(directoryPrefix + icon)} 
+      src={(await import(iconPath)).default} 
       alt={"logo for " + title} 
-      class="thumb"
+      class="labelled-icon__image"
     >
   </div>
 
-  <div class="text-center fs-6">
+  <div class="labelled-icon__title text-center fs-6 ">
     {title}
   </div>
 
 </div>
 
-<style>
-img.thumb {
-  max-height: 2.7rem;
-  max-width: 3rem
+<style lang="scss">
+
+.labelled-icon {
+  &__image {
+    max-height: 2.7rem;
+    max-width: 3rem
+  }
 }
 </style>
