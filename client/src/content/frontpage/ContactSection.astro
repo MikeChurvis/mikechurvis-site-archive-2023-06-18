@@ -1,6 +1,8 @@
 ---
-import SectionLayout from '@/layouts/SectionLayout.astro';
-import ContactForm from '@/components/ContactForm.astro';
+import SectionLayout from '@layout:SectionLayout.astro';
+import ContactForm from '@component:contact-form/ContactFormWrapper.vue';
+
+const { CONTACT_FORM_API_ROOT_URL = "http://localhost:8000" } = import.meta.env
 ---
 
 
@@ -17,7 +19,7 @@ import ContactForm from '@/components/ContactForm.astro';
     </div>
 
     <div class="col-12 col-lg-9">
-      <ContactForm />
+      <ContactForm client:only apiRootUrl={ CONTACT_FORM_API_ROOT_URL } />
     </div>
 
   </div>

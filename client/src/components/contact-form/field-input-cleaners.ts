@@ -1,4 +1,4 @@
-export { cleanNameFieldInput, cleanCompanyFieldInput, cleanEmailFieldInput }
+export { cleanNameFieldInput, cleanOrganizationFieldInput, cleanEmailFieldInput }
 
 
 function cleanNameFieldInput(event: InputEvent): void {
@@ -12,7 +12,7 @@ function cleanNameFieldInput(event: InputEvent): void {
   nameField.value = cleanedName
 }
 
-function cleanCompanyFieldInput(event: InputEvent): void {
+function cleanOrganizationFieldInput(event: InputEvent): void {
   const companyField = event.target as HTMLInputElement
 
   let cleanedCompany = companyField.value

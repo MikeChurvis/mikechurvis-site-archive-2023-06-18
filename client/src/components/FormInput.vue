@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
 import { withDefaults, computed, useAttrs } from "vue"
-import { FormInputType } from "@/scripts/contact-form/types"
-import { generateRandomId } from "@/scripts/utils";
+import { FormInputType } from "@component:contact-form/types"
+import { generateRandomId } from "@script:utils";
 
 // ATTRIBUTES ////
 
