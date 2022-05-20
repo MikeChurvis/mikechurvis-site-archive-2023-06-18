@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
-DEBUG = bool(int(env('DJANGO_DEBUG', 0)))
+DEBUG = bool(int(env('DJANGO_DEBUG', default=0)))
 
-ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1,[::1]').split(',')
+ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS', default='localhost,127.0.0.1,[::1]').split(',')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -137,18 +137,25 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = env('DJANGO_CORS_ALLOWED_ORIGINS').split(',')
+CORS_ALLOWED_ORIGINS = env('DJANGO_CORS_ALLOWED_ORIGINS', default='localhost:3000').split(',')
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
     "access-control-allow-origin",
 ]
 
-GOOGLE_CLIENT_APP_NAME = 'Portfolio Contact Form Messenger'
-GOOGLE_CLIENT_SECRET_FILEPATH = env('GOOGLE_CLIENT_SECRET_FILEPATH')
-GOOGLE_CLIENT_TOKEN_FOLDER = env('GOOGLE_CLIENT_TOKEN_FOLDER')
+# ContactForm App config
 
-EMAIL_RECIPIENT_ADDRESS_LIST = env('EMAIL_RECIPIENT_ADDRESS_LIST').split(',')
-EMAIL_SENDER_ADDRESS = env('EMAIL_SENDER_ADDRESS')
+CONTACTFORM_NAME_MAX_LENGTH = 120
+CONTACTFORM_ORGANIZATION_MAX_LENGTH = 180
+CONTACTFORM_EMAIL_MAX_LENGTH = 320
+CONTACTFORM_EMAIL_REGEX = r"^([a-zA-Z0-9_+-]+\.)*[a-zA-Z0-9_+-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z]+$"
+CONTACTFORM_MESSAGE_MIN_LENGTH = 20
+CONTACTFORM_MESSAGE_MAX_LENGTH = 1000
 
-CELERY_BROKER_URL = env("REDIS_URL")
-CELERY_RESULT_BACKEND = env("REDIS_URL")
+# MailingList App config
+
+MAILINGLIST_GOOGLE_CLIENT_APP_NAME = 'Portfolio Contact Form Messenger'
+MAILINGLIST_GOOGLE_CLIENT_SECRET_FILEPATH = BASE_DIR / 'client-secret.json'
+MAILINGLIST_GOOGLE_CLIENT_TOKEN_FOLDER = BASE_DIR / '.api-tokens'
+MAILINGLIST_TASK_BROKER_URL = 'redis://redis:6379'
+MAILINGLIST_TASK_RESULT_BACKEND = 'redis://redis:6379'

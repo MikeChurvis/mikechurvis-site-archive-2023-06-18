@@ -21,15 +21,15 @@ services:
       - POSTGRES_PORT=${DB_PORT}
   
   django: &django
-    build: ./portfolio
+    build: .
     container_name: portfolio-django
     env_file:
       - .env
     command: [python, manage.py, runserver, 0.0.0.0:8000]
     volumes:
-      - ./portfolio:/usr/src/portfolio
+      - .:/usr/src/portfolio
     ports:
-      - 8000:8000
+      - "8000:8000"
     environment:
       - DJANGO_DEBUG=1
     depends_on: 
@@ -50,11 +50,11 @@ services:
     container_name: portfolio-flower
     command: [
       celery, -A, portfolio,
-      "--broker=${CELERY_BROKER}",
+      "--broker=redis://redis:6379",
       flower, --port=5555
     ]
     ports:
-      - 5555:5555
+      - "5555:5555"
   
   
 volumes:

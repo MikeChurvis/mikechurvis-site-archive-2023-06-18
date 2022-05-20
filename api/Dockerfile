@@ -1,5 +1,5 @@
 # syntax = docker/dockerfile:1.3
-FROM python:3.9-slim
+FROM python:3.10-slim
 
 WORKDIR /usr/src/portfolio
 

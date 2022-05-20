@@ -10,4 +10,4 @@ logs/
 *.secret
 client_secret.json
 
-.credentials
+.env*
