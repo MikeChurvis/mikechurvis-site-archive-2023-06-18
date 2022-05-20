@@ -16,6 +16,8 @@
   },
   "devDependencies": {
     "@astrojs/vue": "^0.1.4",
+    "cypress": "^9.6.1",
+    "local-cypress": "^1.2.5",
     "sass": "^1.51.0",
     "vue": "^3.2.33"
   }

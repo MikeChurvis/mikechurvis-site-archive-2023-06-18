@@ -11,8 +11,10 @@ const props = defineProps<{
 
 const formEncounteredFatalError = ref(false)
 
-onErrorCaptured(() => {
+onErrorCaptured((error) => {
   formEncounteredFatalError.value = true
+  console.error(error)
+  return false  // Stops error propagation here.
 })
 
 // const debugConfig: FormConfig = {
@@ -28,15 +30,16 @@ onErrorCaptured(() => {
 
 
 <template>
-  <Suspense>
-    <ContactForm :api-root-url="props.apiRootUrl" />
-
-    <template #fallback>
-      <div>
-        <ErrorState v-if="formEncounteredFatalError" message="The server could not be reached at this time." />
-        <LoadingState v-else />
-      </div>
-    </template>
-  </Suspense>
+  <div id="contact-form">
+    <ErrorState v-if="formEncounteredFatalError" message="The server could not be reached at this time." />
+    <Suspense>
+      <ContactForm :api-root-url="props.apiRootUrl" />
+      <template #fallback>
+        <div>
+          <LoadingState />
+        </div>
+      </template>
+    </Suspense>
+  </div>
 </template>
 

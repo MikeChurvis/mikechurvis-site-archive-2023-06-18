@@ -22,14 +22,28 @@ function generateFormAPIMethods(apiRootUrl: string) {
     }
 
     const responseData = await response.json()
-    console.log(responseData)
+    const {
+      nameMaxLength,
+      organizationMaxLength,
+      emailMaxLength,
+      emailRegex,
+      messageMinLength,
+      messageMaxLength
+    } = responseData
+    
     const formConfig: FormConfig = {
-      nameMaxLength: responseData['name-max-length'],
-      organizationMaxLength: responseData['organization-max-length'],
-      emailMaxLength: responseData['email-max-length'],
-      emailRegex: responseData['email-regex'],
-      messageMinLength: responseData['message-min-length'],
-      messageMaxLength: responseData['message-max-length']
+      nameMaxLength,
+      organizationMaxLength,
+      emailMaxLength,
+      emailRegex,
+      messageMinLength,
+      messageMaxLength
+    }
+
+    const undefinedConfigProps = Object.keys(formConfig).filter(property => formConfig[property] === undefined)
+
+    if (undefinedConfigProps.length) {
+      throw Error(`API sent invalid config to contact form. Undefined props: ${undefinedConfigProps.join()}`)
     }
 
     return formConfig
@@ -61,19 +75,19 @@ function generateFormAPIMethods(apiRootUrl: string) {
       credentials: "same-origin",
       body: JSON.stringify(formDataValues),
     })
-    
+
     if (response.ok) {
       return true
     } else if (response.status === 422) {
       const responseData = await response.json()
-      
+
       for (const fieldWithError in responseData) {
         formData[fieldWithError].error = responseData[fieldWithError][0]
       }
-      
+
       return false
     }
-    
+
     throw Error(`Server responded with ${response.status}: ${response.statusText}`)
   }
 

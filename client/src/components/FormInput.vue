@@ -69,6 +69,7 @@ textarea.form-control {
     v-if="type == 'textarea'"
     v-model.trim="fieldValue"
     v-bind="attrs"
+    :id="props.id"
     :placeholder="label"
     :class="{ 'is-invalid': error.length > 0 }"
     class="form-control"
@@ -79,6 +80,7 @@ textarea.form-control {
     v-else
     v-model.trim="fieldValue"
     v-bind="attrs"
+    :id="props.id"
     :type="type == 'email' ? 'text' : type"
     :placeholder="label"
     :class="{ 'is-invalid': error.length > 0 }"
@@ -97,6 +99,7 @@ textarea.form-control {
     people who prefer reduced UI motion for medical reasons.
   -->
   <input
+    :data-validates="`#${props.id}`"
     readonly
     disabled
     tabindex="-1"

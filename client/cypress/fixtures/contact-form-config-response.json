@@ -1,0 +1,8 @@
+{
+  "nameMaxLength": 120,
+  "organizationMaxLength": 180,
+  "emailMaxLength": 320,
+  "emailRegex": "/^([a-zA-Z0-9_+-]+\\.)*[a-zA-Z0-9_+-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]+$/",
+  "messageMinLength": 20,
+  "messageMaxLength": 1000
+}

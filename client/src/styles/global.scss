@@ -3,26 +3,33 @@
 @import '../../node_modules/bootstrap/scss/mixins';
 @import '../../node_modules/bootstrap/scss/root';
 
-
-.row > .hero-headshot-container {
-    width: 70vw;
-}
-@include media-breakpoint-up(lg) {
-    .row > .hero-headshot-container {
-        max-width: 25rem;
-    }
-}
-
-@each $color-name, $color in map-merge($theme-colors, $colors) {
-    .shadow.shadow-glow-#{$color-name} {
-        box-shadow: 0 0 1rem tint-color($color, 50%) !important;
-    }
+@each $color-name,
+$color in map-merge($theme-colors, $colors) {
+  .shadow.shadow-glow-#{$color-name} {
+    box-shadow: 0 0 1rem tint-color($color, 50%) !important;
+  }
 }
 
 @import '../../node_modules/bootstrap/scss/bootstrap';
 
+
+html {
+  scroll-padding-top: 4.2rem;
+  @extend .bg-light;
+}
+
+.hero__headshot {
+  // width: clamp(0px, 90%, 20rem);
+  
+  &>img {
+    object-fit: contain;
+    width: 100%;
+    max-width: 320px;
+  }
+}
+
 // Reserve validation label height
 .invalid-feedback {
-    display: block;
-    margin-bottom: .2em;
-  }
+  display: block;
+  margin-bottom: .2em;
+}

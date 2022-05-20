@@ -22,6 +22,11 @@
 
 - [x] Portfolio/frontend/portfolio -> Portfolio/client
 
+# Build a frontend test suite
+
+- [ ] Install Cypress
+- [ ] Make an end-to-end test for the contact form feature (describe-specify syntax, intercept API calls)
+
 # Flatten backend project directory
 
 # Migrate backend dev environment from a live container to a VirtualEnv
@@ -30,7 +35,6 @@
 
 # Convert django webserver to ASGI
 
-# Build a frontend test suite
 
 # Build a backend test suite
 

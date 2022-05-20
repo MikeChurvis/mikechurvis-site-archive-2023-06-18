@@ -5,32 +5,28 @@ const {
 } = Astro.props;
 ---
 
-<div class="nav-adjusted-anchor-target" id={id}></div>
 
-<div class="row justify-content-center align-items-center my-2">
-  <div class="col">
-    <hr>
-  </div>
-  <div class="col-auto text-center text-primary text-uppercase">
-    <h1>{title}</h1>
-  </div>
-  <div class="col">
-    <hr>
-  </div>
-</div>
 
-<section class="mx-auto fs-5">
+<section class="mx-auto fs-5" id={id}>
+  <div class="row justify-content-center align-items-center my-2">
+    <div class="col">
+      <hr>
+    </div>
+    <div class="col-auto text-center text-primary text-uppercase">
+      <h1>{title}</h1>
+    </div>
+    <div class="col">
+      <hr>
+    </div>
+  </div>
+  
   <slot />
+  
 </section>
 
 
 <style>
 section {
   max-width: 55rem;
-}
-
-.nav-adjusted-anchor-target {
-  margin-top: -60px !important;
-  padding-top: 60px !important;
 }
 </style>

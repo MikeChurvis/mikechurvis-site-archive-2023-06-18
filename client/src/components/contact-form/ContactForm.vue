@@ -95,7 +95,7 @@ async function submitForm(): Promise<void> {
           type="text"
           v-model:value="formData.name.value"
           v-model:error="formData.name.error"
-          id="contact-form-name"
+          id="contact-form__name"
           label="Name"
           :maxlength="formConfig.nameMaxLength"
           @blur="formValidators.validateName(formData)"
@@ -107,7 +107,7 @@ async function submitForm(): Promise<void> {
         <FormInput
           label="Organization (optional)"
           type="text"
-          id="contact-form-organization"
+          id="contact-form__organization"
           v-model:value="formData.organization.value"
           v-model:error="formData.organization.error"
           :maxlength="formConfig.organizationMaxLength"
@@ -120,7 +120,7 @@ async function submitForm(): Promise<void> {
         <FormInput
           label="Email"
           type="email"
-          id="contact-form-email"
+          id="contact-form__email"
           v-model:value="formData.email.value"
           v-model:error="formData.email.error"
           :maxlength="formConfig.emailMaxLength"
@@ -133,7 +133,7 @@ async function submitForm(): Promise<void> {
         <FormInput
           label="Message"
           type="textarea"
-          id="contact-form-message"
+          id="contact-form__message"
           v-model:value="formData.message.value"
           v-model:error="formData.message.error"
           :minlength="formConfig.messageMinLength"
@@ -146,6 +146,7 @@ async function submitForm(): Promise<void> {
       <div class="col-12">
         <button
           @click="submitForm()"
+          id="contact-form__submit"
           :class="
             formState === FormState.Ready
               ? 'btn-primary'
