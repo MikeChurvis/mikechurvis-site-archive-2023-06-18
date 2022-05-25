@@ -51,3 +51,9 @@
 - [ ] keyboard accessibility implementation
 
 # Contact form: turn placeholders into actual labels
+
+# What I Did and Why
+
+Simple thing? No.
+
+Have before form: here's what this is doing behind the scenes
