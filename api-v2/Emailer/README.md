@@ -1,10 +1,22 @@
-# Emailer App
+# Emailer
 
-## What does this app do?
+## Purpose
 
-It sends emails via the Gmail API to do so.
+**What does it do?**
+- It sends emails.
 
-## Why do I need this app?
+**How does it do it?**
+- Gmail API
+- Huey + Redis (asynchronous task queue)
 
-- To separate concerns (ContactForm handles the contact form, Emailer handles emails).
-- To future-proof the API (I can foresee having many uses for an app that sends emails).
+**Why do I need it?**
+- To notify myself and a few select others when someone uses my website contact form.
+- To separate concerns.
+- To future-proof the API.
+
+## Structure
+
+The ContactFormEntry model has a `notify_admin_status` and `notify_admin_status_detail` field.
+
+Emailer has a `tasks` module with all of the functions it needs to run.
+
