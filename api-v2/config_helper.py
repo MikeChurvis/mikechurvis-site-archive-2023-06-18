@@ -1,7 +1,7 @@
 from django.core.exceptions import ImproperlyConfigured
 
 
-def validate_settings(settings):
+def validate_settings(settings, required_settings: set[str]):
     required_settings = {
         'CONTACTFORM_NAME_MAX_LENGTH',
         'CONTACTFORM_ORGANIZATION_MAX_LENGTH',

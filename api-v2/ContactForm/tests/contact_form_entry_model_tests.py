@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import DatabaseError
 
-from ..models import ContactFormEntry
+from ..models import ContactFormEntry, AdminNotificationStatus
 import pytest
 
 
@@ -17,7 +17,7 @@ def test_create_with_valid_data_succeeds():
     )
 
     assert entry in ContactFormEntry.objects.all()
-    assert entry.auto_forward_status == 'pending'
+    assert entry.admin_notification_status == 'pending'
 
 
 @pytest.mark.django_db
@@ -42,12 +42,12 @@ def test_update_auto_forward_status_succeeds():
     )
 
     ContactFormEntry.objects.filter(pk=entry.pk).update(
-        auto_forward_status='success'
+        admin_notification_status=AdminNotificationStatus.SUCCESS
     )
 
     entry.refresh_from_db()
 
-    assert entry.auto_forward_status == 'success'
+    assert entry.admin_notification_status == 'success'
 
 
 # SAD PATHS

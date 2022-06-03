@@ -1,3 +1,13 @@
 from django.contrib import admin
 
-# Register your models here.
+from Emailer.models import EmailConfig, EmailUser
+
+
+@admin.register(EmailConfig)
+class EmailConfigAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(EmailUser)
+class EmailUserAdmin(admin.ModelAdmin):
+    pass

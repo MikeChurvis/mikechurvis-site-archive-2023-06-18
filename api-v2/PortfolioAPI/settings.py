@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 
+import huey
+from dotenv import load_dotenv
+
+load_dotenv()
 env = os.getenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'huey.contrib.djhuey',
 
     'ContactForm',
     'Emailer',
@@ -123,7 +129,42 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CONTACTFORM_NAME_MAX_LENGTH = 120
 CONTACTFORM_ORGANIZATION_MAX_LENGTH = 180
-CONTACTFORM_EMAIL_MAX_LENGTH = 320
+CONTACTFORM_EMAIL_MAX_LENGTH = 254  # Matches Django's EmailValidator max length.
 CONTACTFORM_EMAIL_REGULAR_EXPRESSION = r'^([a-zA-Z0-9_+-]+\.)*[a-zA-Z0-9_+-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z]+$'
 CONTACTFORM_MESSAGE_MIN_LENGTH = 20
 CONTACTFORM_MESSAGE_MAX_LENGTH = 1000
+
+EMAILER_AUTH_SCOPES = ['https://mail.google.com/']
+EMAILER_TOKEN_FILEPATH = BASE_DIR / '.secrets' / 'token.pickle'
+EMAILER_CLIENT_SECRETS_FILEPATH = BASE_DIR / '.secrets' / 'client_secret.json'
+EMAILER_CLIENT_EMAIL_ADDRESS = 'mikechurvis.site@gmail.com'
+
+HUEY = huey.RedisHuey('portfolio')
+if DEBUG:
+    HUEY.immediate = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'WARNING',
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs' / 'django-debug.log'
+        }
+    },
+    'root': {
+        'handlers': ['console', 'file'],
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
