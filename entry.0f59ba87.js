@@ -1,0 +1,1 @@
+import{d as u,p as a,q as o}from"./chunks/chunk.708a397b.js";const p=u({props:{value:String},setup({value:e}){return e?()=>a("astro-fragment",{innerHTML:e}):()=>null}});var c=e=>(t,n,r)=>{delete n.class;const l=t.name?`${t.name} Host`:void 0,s={};r!=null&&(s.default=()=>a(p,{value:r})),o({name:l,render:()=>a(t,n,s)}).mount(e,!0)};export{c as default};
