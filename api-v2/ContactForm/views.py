@@ -2,6 +2,8 @@ from http import HTTPStatus
 
 from django.conf import settings
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 
 from ContactForm.forms import ContactFormEntryForm
 from ContactForm.tasks import send_contact_form_entry_as_email
@@ -23,17 +25,12 @@ def get_config_data(request):
     })
 
 
+@csrf_exempt
 def post_contact_form_data(request):
     """
     Validates and saves information sent from the frontend contact form.
     Also queues the saved contact form entry to be sent as an email outside the request-response cycle.
     """
-
-    if request.method not in ['POST']:
-        return JsonResponse(
-            {'allowed_methods': ['POST']},
-            status=HTTPStatus.METHOD_NOT_ALLOWED
-        )
 
     entry_form = ContactFormEntryForm(request.POST)
 
