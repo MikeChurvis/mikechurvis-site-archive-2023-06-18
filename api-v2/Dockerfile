@@ -30,4 +30,6 @@ RUN pip install --no-cache-dir virtualenv &&\
 
 COPY . .
 
+# Mark entrypoint as executable.
+RUN ["chmod", "+x", "/portfolio/entrypoint.sh"]
 ENTRYPOINT ["/portfolio/entrypoint.sh"]
