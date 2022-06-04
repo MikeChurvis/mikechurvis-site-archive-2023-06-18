@@ -40,12 +40,12 @@ jobs:
           overwrite: true
 
       - name: Pull images, run containers.
-        uses: appleboy/ssh-action@master
+        uses: fifsky/ssh-action@master
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          username: ${{ secrets.SSH_USER }}
+          user: ${{ secrets.SSH_USER }}
           host: ${{ secrets.DROPLET_IP }}
-          script: |
+          command: |
             cd ~/portfolio
             docker compose pull
             docker compose up --detach
