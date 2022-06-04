@@ -4,8 +4,6 @@ on:
   push:
     branches: [ main ]
     paths:
-      - '.github/workflows/deploy-api-to-digitalocean.yml'
-      - 'deployment/**'
       - 'api-v2/**'
       - '!**.md'
 
