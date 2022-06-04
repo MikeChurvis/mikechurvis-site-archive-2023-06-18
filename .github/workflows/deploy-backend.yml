@@ -1,8 +1,5 @@
-name: Deploy Portfolio
-on: 
-  push:
-    branches:
-      - release
+name: Execute Full Deployment
+on: workflow_dispatch
 jobs:
   deploy-backend:
     name: Deploy the portfolio website backend.
@@ -18,7 +15,7 @@ jobs:
           USERNAME: ${{ secrets.SSH_USER }}
           KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         with:
-          source: backend/docker-compose.deploy.yaml
+          source: api-v2/docker-compose.yaml
           target: ~/portfolio
           overwrite: true
       
@@ -30,7 +27,5 @@ jobs:
           host: ${{ secrets.DROPLET_IP }}
           script: |
             cd ~/portfolio
-            mv docker-compose.deploy.yaml docker-compose.yaml
-            mv .env.prod .env
             docker compose pull
             docker compose up --detach

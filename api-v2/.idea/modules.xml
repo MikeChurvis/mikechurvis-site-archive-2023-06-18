@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../.github/.idea/.github.iml" filepath="$PROJECT_DIR$/../.github/.idea/.github.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/api-v2.iml" filepath="$PROJECT_DIR$/.idea/api-v2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../client/.idea/client.iml" filepath="$PROJECT_DIR$/../client/.idea/client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../deployment/.idea/deployment.iml" filepath="$PROJECT_DIR$/../deployment/.idea/deployment.iml" />
     </modules>
   </component>
 </project>

@@ -9,30 +9,37 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import logging
 from pathlib import Path
 import os
 
 import huey
-from dotenv import load_dotenv
-
-load_dotenv()
-env = os.getenv
+from dotenv import dotenv_values
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
+env_values = {
+    # Root-level .env has lowest priority
+    **dotenv_values(BASE_DIR / '.env'),
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+    # Secret .env overrides root .env
+    **dotenv_values(BASE_DIR / '.secrets' / '.env'),
+
+    # Environment variables set directly override everything.
+    **os.environ,
+}
+
+
+def env(key: str, default=None):
+    return env_values.get(key) or default
+
+
+DEBUG = bool(env('DJANGO_DEBUG', default=False))
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
-ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS', default='').split() or []
-
-# Application definition
+ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS', default='localhost,127.0.0.1,[::1]').split(',')
+print(f'ALLOWED_HOSTS = {ALLOWED_HOSTS}')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -86,60 +93,18 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+} if DEBUG else {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'HOST': env('POSTGRES_HOST'),
+        'PORT': env('POSTGRES_PORT'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+    }
 }
 
-# Password validation
-# https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
-
-# Internationalization
-# https://docs.djangoproject.com/en/4.0/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_TZ = True
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
-STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-CONTACTFORM_NAME_MAX_LENGTH = 120
-CONTACTFORM_ORGANIZATION_MAX_LENGTH = 180
-CONTACTFORM_EMAIL_MAX_LENGTH = 254  # Matches Django's EmailValidator max length.
-CONTACTFORM_EMAIL_REGULAR_EXPRESSION = r'^([a-zA-Z0-9_+-]+\.)*[a-zA-Z0-9_+-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z]+$'
-CONTACTFORM_MESSAGE_MIN_LENGTH = 20
-CONTACTFORM_MESSAGE_MAX_LENGTH = 1000
-
-EMAILER_AUTH_SCOPES = ['https://mail.google.com/']
-EMAILER_TOKEN_FILEPATH = BASE_DIR / '.secrets' / 'token.pickle'
-EMAILER_CLIENT_SECRETS_FILEPATH = BASE_DIR / '.secrets' / 'client_secret.json'
-EMAILER_CLIENT_EMAIL_ADDRESS = 'mikechurvis.site@gmail.com'
-
-HUEY = huey.RedisHuey('portfolio')
+HUEY = huey.RedisHuey('portfolio', host='redis')
 if DEBUG:
     HUEY.immediate = True
 
@@ -168,3 +133,43 @@ LOGGING = {
         },
     },
 }
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LANGUAGE_CODE = 'en-us'
+
+TIME_ZONE = 'UTC'
+
+USE_I18N = True
+
+USE_TZ = True
+
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+CONTACTFORM_NAME_MAX_LENGTH = 120
+CONTACTFORM_ORGANIZATION_MAX_LENGTH = 180
+CONTACTFORM_EMAIL_MAX_LENGTH = 254  # Matches Django's EmailValidator max length.
+CONTACTFORM_EMAIL_REGULAR_EXPRESSION = r'^([a-zA-Z0-9_+-]+\.)*[a-zA-Z0-9_+-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z]+$'
+CONTACTFORM_MESSAGE_MIN_LENGTH = 20
+CONTACTFORM_MESSAGE_MAX_LENGTH = 1000
+
+EMAILER_AUTH_SCOPES = ['https://mail.google.com/']
+EMAILER_TOKEN_FILEPATH = BASE_DIR / '.secrets' / 'token.pickle'
+EMAILER_CLIENT_SECRETS_FILEPATH = BASE_DIR / '.secrets' / 'client_secret.json'
+EMAILER_CLIENT_EMAIL_ADDRESS = 'mikechurvis.site@gmail.com'

@@ -18,6 +18,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="deployment" />
+    <orderEntry type="module" module-name=".github" />
+    <orderEntry type="module" module-name="client" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="PLAIN" />
