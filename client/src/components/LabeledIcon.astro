@@ -7,10 +7,10 @@ const { title, iconPath } = Astro.props;
   
   <div class="d-flex justify-content-center mb-1">
     <img 
-      src={(await import(iconPath)).default} 
+      src={ iconPath /* this doesn't work yet -> (await import(iconPath)).default*/ } 
       alt={"logo for " + title} 
       class="labelled-icon__image"
-    >
+    />
   </div>
 
   <div class="labelled-icon__title text-center fs-6 ">
