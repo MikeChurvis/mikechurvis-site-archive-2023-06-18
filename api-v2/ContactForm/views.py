@@ -1,3 +1,4 @@
+import json
 from http import HTTPStatus
 
 from django.conf import settings
@@ -32,7 +33,18 @@ def post_contact_form_data(request):
     Also queues the saved contact form entry to be sent as an email outside the request-response cycle.
     """
 
-    entry_form = ContactFormEntryForm(request.POST)
+    if request.method not in ['POST', 'OPTIONS']:
+        return JsonResponse(
+            {'methods_allowed': {
+                'form_submission': ['POST'],
+                'preflight': ['OPTIONS'],
+            }},
+            status=HTTPStatus.METHOD_NOT_ALLOWED
+        )
+
+    form_data = json.loads(request.body)
+
+    entry_form = ContactFormEntryForm(form_data)
 
     if entry_form.is_valid():
         entry = entry_form.save()

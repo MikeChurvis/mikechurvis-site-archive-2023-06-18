@@ -86,8 +86,7 @@ async function submitForm(): Promise<void> {
 
 <template>
   <SuccessState v-if="formState === FormState.Success" />
-  <ErrorState v-if="formState === FormState.FatalError" />
-
+  <ErrorState v-else-if="formState === FormState.FatalError" />
   <fieldset v-else :disabled="formState !== FormState.Ready">
     <div class="row g-2">
       <div class="col-12">
