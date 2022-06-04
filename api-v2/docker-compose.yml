@@ -8,12 +8,8 @@ services:
     image: postgres:13-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_PASSWORD
-      - POSTGRES_USER
-      - POSTGRES_DB
-      - POSTGRES_HOST
-      - POSTGRES_PORT
+    env_file:
+      - .env
 
   django:
     image: mikechurvis/portfolio:latest
@@ -31,14 +27,8 @@ services:
     ]
     ports:
       - "127.0.0.1:8000:8000"
-    environment:
-      - DJANGO_SECRET_KEY
-      - DJANGO_ALLOWED_HOSTS
-      - POSTGRES_PASSWORD
-      - POSTGRES_USER
-      - POSTGRES_DB
-      - POSTGRES_HOST
-      - POSTGRES_PORT
+    env_file:
+      - .env
     depends_on:
       - postgres
       - redis
