@@ -79,6 +79,7 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
 CSRF_TRUSTED_ORIGINS = env('DJANGO_CSRF_TRUSTED_ORIGINS', default='http://localhost:8000').split(',')
 
 ROOT_URLCONF = 'PortfolioAPI.urls'
+APPEND_SLASH = False
 
 TEMPLATES = [
     {
