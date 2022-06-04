@@ -1,10 +1,10 @@
-name: Execute Full Deployment
+name: Deploy API to DigitalOcean
 on:
   workflow_dispatch:
   push:
     branches: [ main ]
     paths:
-      - '.github/workflows/deploy-backend.yml'
+      - '.github/workflows/deploy-api-to-digitalocean.yml'
       - 'api-v2/*'
       - '!**.md'
 
@@ -35,7 +35,7 @@ jobs:
           USERNAME: ${{ secrets.SSH_USER }}
           KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         with:
-          source: api-v2/docker-compose.yaml
+          source: api-v2/docker-compose.yml
           target: ~/portfolio
           overwrite: true
 
