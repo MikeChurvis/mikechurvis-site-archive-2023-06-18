@@ -6,6 +6,8 @@ on:
     branches: [main]
     paths:
       - 'client/**'
+      - '!cypress/**'
+      - '!cypress*'
       - '!**.md'
 
 jobs:

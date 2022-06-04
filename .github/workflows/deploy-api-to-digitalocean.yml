@@ -5,6 +5,10 @@ on:
     branches: [ main ]
     paths:
       - 'api-v2/**'
+      - '!tests.py'
+      - '!tests/**'
+      - '!pytest*'
+      - '!*_tests.py'
       - '!**.md'
 
 jobs:
