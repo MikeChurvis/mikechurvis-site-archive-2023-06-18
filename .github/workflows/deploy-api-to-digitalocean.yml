@@ -36,6 +36,7 @@ jobs:
           KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         with:
           source: api-v2/docker-compose.yml
+          strip_components: 1
           target: ~/portfolio
           overwrite: true
 
