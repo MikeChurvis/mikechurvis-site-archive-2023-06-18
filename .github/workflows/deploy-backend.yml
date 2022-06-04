@@ -26,7 +26,7 @@ jobs:
           script: |
             cd ~/portfolio
             docker compose down
-            rm docker-compose.yml
+            rm -f docker-compose.yml docker-compose.yaml
 
       - name: Copy the backend files onto remote server.
         uses: appleboy/scp-action@master
