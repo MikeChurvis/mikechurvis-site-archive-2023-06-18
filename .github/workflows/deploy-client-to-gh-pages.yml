@@ -6,7 +6,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/deploy-client-to-gh-pages.yml'
-      - 'client/*'
+      - 'client/**'
       - '!**.md'
 
 jobs:
