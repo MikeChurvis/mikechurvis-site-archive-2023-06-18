@@ -15,6 +15,8 @@ import os
 
 import huey
 from dotenv import dotenv_values
+from corsheaders.defaults import default_headers
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -50,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'huey.contrib.djhuey',
+    'corsheaders',
 
     'ContactForm',
     'Emailer',
@@ -58,11 +61,20 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CORS_ALLOWED_ORIGINS = env('DJANGO_CORS_ALLOWED_ORIGINS', default='localhost:3000').split(',')
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    "access-control-allow-origin",
 ]
 
 ROOT_URLCONF = 'PortfolioAPI.urls'
