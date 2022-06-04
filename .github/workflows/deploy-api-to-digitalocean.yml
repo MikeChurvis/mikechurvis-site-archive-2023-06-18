@@ -33,13 +33,6 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/portfolio:latest
 
-      - name: Build and push the Nginx image
-        uses: docker/build-push-action@v3
-        with:
-          context: ./deployment/nginx
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/portfolio:nginx-latest
-
       - name: Stop the old container network.
         uses: appleboy/ssh-action@master
         with:
