@@ -42,7 +42,7 @@ jobs:
           script: |
             cd ~/portfolio
             docker compose down
-            rm -f docker-compose.yml docker-compose.yaml
+            rm -f docker-compose.yml
 
       - name: Copy the compose file onto the remote server.
         uses: appleboy/scp-action@master
@@ -51,7 +51,7 @@ jobs:
           USERNAME: ${{ secrets.SSH_USER }}
           KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         with:
-          source: api-v2/docker-compose.yml
+          source: api-v2/docker-compose.yml api-v2/nginx.conf
           strip_components: 1
           target: ~/portfolio
           overwrite: true
