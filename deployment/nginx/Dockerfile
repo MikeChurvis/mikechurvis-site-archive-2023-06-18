@@ -1,7 +1,7 @@
 FROM nginx:1-alpine
 
 RUN apk add certbot certbot-nginx \
-  && rm /etc/nginx/conf.d/default.conf \
+  && rm -f /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/nginx.conf \
   && mkdir /etc/letsencrypt \
   && mkdir -p /var/www/html/ \
   && mkdir -p /var/www/letsencrypt
