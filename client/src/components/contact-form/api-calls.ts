@@ -69,7 +69,7 @@ function generateFormAPIMethods(apiRootUrl: string) {
       formDataValues[field] = formData[field].value
     }
 
-    const response = await fetch(`${apiRootUrl}/contact`, {
+    const response = await fetch(`${apiRootUrl}/contact/`, {
       method: 'POST',
       mode: 'cors',
       headers: { "Access-Control-Allow-Origin": apiRootUrl },
