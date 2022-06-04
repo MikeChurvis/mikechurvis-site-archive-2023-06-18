@@ -1,0 +1,17 @@
+# Sensitive information
+.env
+.secrets
+
+# Dev environment artifacts
+.pytest_cache
+__pycache__
+venv
+logs
+tests*
+db.sqlite3
+
+# Git artifacts
+.gitignore
+
+# Documentation
+README.md

@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  django:
+    build: .
+    volumes:
+      - ./.secrets:/portfolio/.secrets
+      - ./logs:/portfolio/logs
+
+  nginx:
+    build: ../deployment/nginx
+    volumes:
+      - ./staticfiles:/var/www/html
+

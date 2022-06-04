@@ -1,0 +1,1 @@
+I used to use Django's `send_mail` function, but Gmail no longer supports simple password authentication, so I had to switch to using the Gmail API. 

@@ -1,0 +1,13 @@
+/__pycache__/
+
+db.sqlite3
+*.pyc
+
+staticfiles
+
+logs/
+
+*.secret
+client_secret.json
+
+.env*

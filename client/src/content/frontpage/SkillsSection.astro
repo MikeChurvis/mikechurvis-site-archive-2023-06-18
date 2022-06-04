@@ -1,0 +1,93 @@
+---
+import SectionLayout from '@layout:SectionLayout.astro';
+
+import TitledContainer from '@component:TitledContainer.astro';
+import LabeledIcon from '@component:LabeledIcon.astro';
+import SecureAnchor from '@component:SecureAnchor.astro';
+
+// Use of an categories array instead of skills.keys
+// guarantees a fixed presentation order.
+const skillCategories = [
+  'Frontend',
+  'Backend',
+  'Tooling',
+  'Principles',
+];
+
+const skills = {
+  "Frontend": [
+    ["Vue", "vue-logo.png"],
+    ["TypeScript", "typescript-logo.svg"],
+    ["Bootstrap", "bootstrap-logo.svg"],
+    ["Sass/SCSS", "sass-logo.png"],
+    ["ES6", "es6-logo.png"],
+    ["Astro", "astro-logo.png"],
+  ],
+  "Backend": [
+    ["Django", "django-logo.png"],
+    ["Docker", "docker-logo.png"],
+    ["PostgreSQL", "postgresql-logo.png"],
+    ["Redis", "redis-logo.png"],
+    ["Nginx", "nginx-logo.png"],
+    ["DigitalOcean", "digitalocean-logo.png"],
+  ],
+  "Tooling": [
+    ["PyCharm", "pycharm-logo.png"],
+    ["VS Code", "vs-code-logo.png"],
+    ["Git", "git-logo.png"],
+    ["GitHub", "github-logo.png"],
+    ["GitHub Actions", "github-actions-logo.png"],
+    ["Bash", "bash-logo.png"],
+  ],
+  "Principles": [
+    ['Mobile-First Design', 'mobile-first-logo.png'],
+    ['Accessibility', 'accessibility-logo.png'],
+    ['Containerization', 'container-icon.png'],
+    ['Continuous Integration', 'ci-cd-logo.png'],
+    ['Search Engine Optimization', 'seo-logo.png'],
+    ['12-Factor Methodology', '12-factor-logo.png'],
+  ],
+};
+---
+
+
+<SectionLayout title="My Skills" id="skills">
+
+  {skillCategories.map((category) => (
+
+    <TitledContainer title={category}>
+      <div class="row">
+
+        {skills[category].map(([skill, logo]) => (
+          
+          <div class="col-4 col-md py-2">
+            <LabeledIcon title={skill} iconPath={'../images/logos/' + logo} />
+          </div>
+
+        ))}
+
+      </div>
+    </TitledContainer>
+
+  ))}
+  
+  <br>
+
+  <p>
+    Check out this website's 
+    <SecureAnchor 
+      dest="GitHub" 
+      href="https://github.com/MikeChurvis/mikechurvis.github.io"
+    >GitHub repository</SecureAnchor>
+    to see how I put all of the above to use.
+  </p>
+
+  <p>
+    My CV is
+    <SecureAnchor
+      dest="Google Docs"
+      href="https://docs.google.com/document/d/1OXhOpS_0R9XaxMbjMaMJuRj1WHKsW5dUWVgsK8_gLXg/edit?usp=sharing"
+    >available here</SecureAnchor>.
+    It contains a complete list of my skills and training.
+  </p>
+</SectionLayout>

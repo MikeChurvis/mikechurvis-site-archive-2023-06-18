@@ -1,0 +1,32 @@
+---
+const { 
+  title, 
+  id = title.toLowerCase().replace(/\W/g, "-"),
+} = Astro.props;
+---
+
+
+
+<section class="mx-auto fs-5" id={id}>
+  <div class="row justify-content-center align-items-center my-2">
+    <div class="col">
+      <hr>
+    </div>
+    <div class="col-auto text-center text-primary text-uppercase">
+      <h1>{title}</h1>
+    </div>
+    <div class="col">
+      <hr>
+    </div>
+  </div>
+  
+  <slot />
+  
+</section>
+
+
+<style>
+section {
+  max-width: 55rem;
+}
+</style>
