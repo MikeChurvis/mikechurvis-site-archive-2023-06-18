@@ -71,7 +71,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = env('DJANGO_CORS_ALLOWED_ORIGINS', default='localhost:3000').split(',')
+CORS_ALLOWED_ORIGINS = env('DJANGO_CORS_ALLOWED_ORIGINS', default='http://localhost:3000').split(',')
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
     "access-control-allow-origin",
