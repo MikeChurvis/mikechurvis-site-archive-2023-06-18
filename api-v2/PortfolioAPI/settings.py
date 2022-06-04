@@ -72,10 +72,11 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = env('DJANGO_CORS_ALLOWED_ORIGINS', default='http://localhost:3000').split(',')
-
 CORS_ALLOW_HEADERS = list(default_headers) + [
     "access-control-allow-origin",
 ]
+
+CSRF_TRUSTED_ORIGINS = ALLOWED_HOSTS
 
 ROOT_URLCONF = 'PortfolioAPI.urls'
 
