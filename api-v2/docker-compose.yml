@@ -6,6 +6,7 @@ services:
 
   postgres:
     image: postgres:13-alpine
+    user: "${UID}:${GID}"
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
@@ -17,6 +18,7 @@ services:
 
   django:
     image: mikechurvis/portfolio:latest
+    user: "${UID}:${GID}"
     volumes:
       - ~/portfolio/.secrets:/portfolio/.secrets
       - ~/portfolio/logs:/portfolio/logs
@@ -44,6 +46,7 @@ services:
 
   nginx:
     image: mikechurvis/portfolio:nginx-latest
+    user: "${UID}:${GID}"
     ports:
       - "80:80"
       - "443:443"
