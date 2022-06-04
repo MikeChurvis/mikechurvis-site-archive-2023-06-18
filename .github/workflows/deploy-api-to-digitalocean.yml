@@ -5,9 +5,9 @@ on:
     branches: [ main ]
     paths:
       - '.github/workflows/deploy-api-to-digitalocean.yml'
+      - 'deployment/*'
       - 'api-v2/*'
       - '!**.md'
-
 
 jobs:
   deploy-backend:
