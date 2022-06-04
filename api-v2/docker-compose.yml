@@ -41,7 +41,7 @@ services:
     volumes:
       - ~/portfolio/staticfiles:/var/www/html
       - ~/portfolio/letsencrypt:/etc/letsencrypt
-      - ~/portfolio/letsencrypt-static:/var/www/letsencrypt
+      - /var/www/letsencrypt:/var/www/letsencrypt
     depends_on:
       - django
 
