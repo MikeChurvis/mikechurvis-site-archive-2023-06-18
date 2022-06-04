@@ -1,1 +1,0 @@
-import{d as l,j as a,k as m}from"./runtime-dom.esm-bundler.a0638ba9.js";const o=l({props:{value:String},setup({value:e}){return e?()=>a("astro-fragment",{innerHTML:e}):()=>null}});var f=e=>(t,n,r)=>{delete n.class;const u=t.name?`${t.name} Host`:void 0,s={};r!=null&&(s.default=()=>a(o,{value:r})),m({name:u,render:()=>a(t,n,s)}).mount(e,!0)};export{f as default};
