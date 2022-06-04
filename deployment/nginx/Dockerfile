@@ -7,5 +7,3 @@ RUN apk add certbot certbot-nginx \
   && mkdir -p /var/www/letsencrypt
 
 COPY nginx.conf /etc/nginx/conf.d
-
-USER portfolio-admin:portfolio-admin
