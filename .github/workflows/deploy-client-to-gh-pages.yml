@@ -1,6 +1,13 @@
 name: Deploy Frontend Client to GitHub Pages
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/deploy-client-to-gh-pages.yml'
+      - 'client/*'
+      - '!**.md'
 
 jobs:
   deploy-client:
