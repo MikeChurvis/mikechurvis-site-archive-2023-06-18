@@ -34,16 +34,25 @@ services:
       - redis
 
   nginx:
-    image: mikechurvis/portfolio:nginx-latest
+    image: nginx:latest
     ports:
       - "80:80"
       - "443:443"
+    restart: always
     volumes:
-      - ~/portfolio/staticfiles:/var/www/html
-      - ~/portfolio/letsencrypt:/etc/letsencrypt
-      - /var/www/letsencrypt:/var/www/letsencrypt
+      - ~/portfolio/staticfiles:/var/www/html/static:ro
+      - ~/portfolio/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
+      - ~/portfolio/certbot/www:/var/www/certbot:ro
+      - ~/portfolio/certbot/conf:/etc/nginx/ssl/:ro
     depends_on:
       - django
+
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ~/portfolio/certbot/www:/var/www/certbot:rw
+      - ~/portfolio/certbot/conf:/etc/letsencrypt:rw
+      - ~/portfolio/certbot/logs:/var/log/letsencrypt:rw
 
 volumes:
   postgres_data:
