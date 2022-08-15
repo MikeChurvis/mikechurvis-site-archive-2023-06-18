@@ -15,3 +15,9 @@
 - CACHE_HOST=cache
 - DJANGO_ALLOWED_HOSTS=mikechurvis.com,api.mikechurvis.com,backend.mikechurvis.com  
 - DJANGO_CORS_ALLOWED_ORIGINS=mikechurvis.com,www.mikechurvis.com
+
+# Credentials
+
+Get certifications
+- www.pythoninstitute.org
+- 
