@@ -1,0 +1,50 @@
+---
+import headshotImg from '@image:headshot_transparency_offwhite_photo-2022-03-08.png';
+import SecureAnchor from '@component:SecureAnchor.astro';
+---
+
+<div id="top" class="bg-primary text-white text-center text-md-start p-3">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="hero__headshot col-12 col-sm-8 col-md-4 text-md-end">
+        <img src={ headshotImg } class="rounded-circle shadow img-fluid">
+      </div>
+      
+      <div class="col-12 col-md">
+        <div class="row">
+        
+          <div class="col-12">
+            <h1 class="display-2 fw-normal font-monospace">Mike Churvis</h1>
+            <p class="h3">Full-Stack Developer</p>
+            <p>Web Apps &bull; Websites &bull; APIs</p>
+          </div>
+        
+          <div class="col-12">
+            <div class="row gap-3 align-items-center">
+            
+              <div class="col-12 col-md-auto">
+                <div class="alert alert-info shadow shadow-glow-info m-0 p-1 d-inline-flex align-items-center">
+                  <i class="bi bi-briefcase text-success fs-4 me-2"></i>
+                  <span class="text-success fs-5 fw-bold">Hiring?</span>
+                  <div class="ms-3">
+                    <a href="#contact" class="btn btn-success fs-6 fw-bold stretched-link">Contact Me</a>
+                  </div>
+                </div>
+              </div>
+            
+              <div class="col-12 col-md-auto">
+                <SecureAnchor
+                  dest="Google Docs"
+                  href="https://docs.google.com/document/d/1OXhOpS_0R9XaxMbjMaMJuRj1WHKsW5dUWVgsK8_gLXg/edit?usp=sharing"
+                  class="btn btn-outline-light align-items-center"
+                >
+                  View my CV
+                </SecureAnchor>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

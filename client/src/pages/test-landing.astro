@@ -1,0 +1,58 @@
+---
+import BaseLayout from '@layout:BaseLayout.astro'
+
+import Navbar from '@component:Navbar.astro'
+
+import Hero from '@content:frontpage/HeroTest.astro'
+import AboutSection from '@content:frontpage/AboutSection.astro';
+import SkillsSection from '@content:frontpage/SkillsSection.astro';
+import ContactSection from '@content:frontpage/ContactSection.astro';
+---
+
+<BaseLayout title="Mike Churvis">
+	<div 
+    id="id-navbar-target" 
+    class="container-fluid p-0" 
+    style="position: relative;" 
+    data-bs-spy="scroll" 
+    data-bs-target="#navbar" 
+    data-bs-offset="40"
+  >
+
+		<Navbar />
+
+		<Hero />
+
+    <div id="content" class="container fs-5">
+
+      <AboutSection />
+
+      <SkillsSection />
+
+      <ContactSection />
+
+    </div>
+
+
+	</div>
+
+	<script slot="pageScripts">
+		new bootstrap.ScrollSpy(document.body, {
+			target: '#navbar',
+			offset: 90,
+		})
+	</script>
+</BaseLayout>
+
+
+<style>
+p:last-child {
+	margin-bottom: 0;
+}
+textarea.form-control {
+	height: 15rem;
+}
+section {
+  max-width: 55rem;
+}
+</style>
