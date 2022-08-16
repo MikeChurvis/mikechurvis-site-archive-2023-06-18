@@ -18,4 +18,4 @@ jobs:
           host: ${{ secrets.DROPLET_IP }}
           script: |
             cd ~/portfolio
-            docker compose exec django "python manage.py refreshapitoken"
+            docker compose exec django bash -c "source venv/bin/activate && python manage.py refreshapitoken"
