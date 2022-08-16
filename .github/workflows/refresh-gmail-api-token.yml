@@ -1,0 +1,21 @@
+name: Refresh Gmail API auth token every 4 months
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 1 */4 *"
+
+jobs:
+  renew-certs:
+    name: Renew API Certificates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Stop the old container network.
+        uses: appleboy/ssh-action@master
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          username: ${{ secrets.SSH_USER }}
+          host: ${{ secrets.DROPLET_IP }}
+          script: |
+            cd ~/portfolio
+            docker compose exec django "python manage.py refreshapitoken"

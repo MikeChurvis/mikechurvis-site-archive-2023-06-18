@@ -1,11 +1,12 @@
 import base64
-import logger
+import logging
 import pickle
 import os
 
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+import google.auth.exceptions
 from googleapiclient.discovery import build
 from googleapiclient.errors import Error as GoogleAPIError
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -14,7 +15,7 @@ from google.auth.transport.requests import Request as GoogleAuthRequest
 from django.conf import settings
 from config_helper import validate_settings
 
-logger = logger.getLogger(__name__)
+logger = logging.getLogger()
 
 validate_settings(settings, {
     "EMAILER_TOKEN_FILEPATH",
@@ -34,18 +35,28 @@ def get_gmail_service():
             credentials = pickle.load(token_data)
 
     if not credentials or not credentials.valid:
-        if credentials and credentials.expired and credentials.refresh_token:
-            logger.info('Token expired. Refreshing...')
-            credentials.refresh(GoogleAuthRequest())
-            logger.info('Token refreshed.')
-        else:
+        def initiate_auth_flow():
             logger.info('Token missing or invalid. Initiating auth flow...')
             auth_flow = InstalledAppFlow.from_client_secrets_file(
                 settings.EMAILER_CLIENT_SECRETS_FILEPATH,
                 settings.EMAILER_AUTH_SCOPES
             )
-            credentials = auth_flow.run_local_server(port=5000)
+            new_credentials = auth_flow.run_local_server(port=5000)
             logger.info('Auth flow complete. Token generated.')
+            return new_credentials
+
+        if credentials and credentials.expired and credentials.refresh_token:
+            logger.info('Token expired. Refreshing...')
+
+            try:
+                credentials.refresh(GoogleAuthRequest())
+            except google.auth.exceptions.RefreshError:
+                credentials = initiate_auth_flow()
+            else:
+                logger.info('Token refreshed.')
+
+        else:
+            credentials = initiate_auth_flow()
 
         with open(token_path, 'wb') as token_data:
             pickle.dump(credentials, token_data)
