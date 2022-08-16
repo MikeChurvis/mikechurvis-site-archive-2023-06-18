@@ -7,10 +7,10 @@ on:
 
 jobs:
   renew-certs:
-    name: Renew API Certificates
+    name: Renew Gmail API refresh token.
     runs-on: ubuntu-latest
     steps:
-      - name: Stop the old container network.
+      - name: Invoke the token renewal admin command.
         uses: appleboy/ssh-action@master
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -18,4 +18,4 @@ jobs:
           host: ${{ secrets.DROPLET_IP }}
           script: |
             cd ~/portfolio
-            docker compose exec django bash -c "source venv/bin/activate && python manage.py refreshapitoken"
+            docker compose exec -T django bash -c "source venv/bin/activate && python manage.py refreshapitoken"

@@ -9,7 +9,7 @@ jobs:
     name: Renew API Certificates
     runs-on: ubuntu-latest
     steps:
-      - name: Stop the old container network.
+      - name: Invoke the certbot container as a one-off command.
         uses: appleboy/ssh-action@master
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
