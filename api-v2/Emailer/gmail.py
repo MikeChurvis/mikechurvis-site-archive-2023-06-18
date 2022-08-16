@@ -1,5 +1,5 @@
 import base64
-import logging
+import logger
 import pickle
 import os
 
@@ -13,6 +13,8 @@ from google.auth.transport.requests import Request as GoogleAuthRequest
 
 from django.conf import settings
 from config_helper import validate_settings
+
+logger = logger.getLogger(__name__)
 
 validate_settings(settings, {
     "EMAILER_TOKEN_FILEPATH",
@@ -33,17 +35,17 @@ def get_gmail_service():
 
     if not credentials or not credentials.valid:
         if credentials and credentials.expired and credentials.refresh_token:
-            logging.info('Token expired. Refreshing...')
+            logger.info('Token expired. Refreshing...')
             credentials.refresh(GoogleAuthRequest())
-            logging.info('Token refreshed.')
+            logger.info('Token refreshed.')
         else:
-            logging.info('Token missing or invalid. Initiating auth flow...')
+            logger.info('Token missing or invalid. Initiating auth flow...')
             auth_flow = InstalledAppFlow.from_client_secrets_file(
                 settings.EMAILER_CLIENT_SECRETS_FILEPATH,
                 settings.EMAILER_AUTH_SCOPES
             )
             credentials = auth_flow.run_local_server(port=5000)
-            logging.info('Auth flow complete. Token generated.')
+            logger.info('Auth flow complete. Token generated.')
 
         with open(token_path, 'wb') as token_data:
             pickle.dump(credentials, token_data)
@@ -59,10 +61,10 @@ def send_email(service, email_data: MIMEMultipart):
         email_body = {'raw': encoded_email_data}
 
         email_service_response = service.users().messages().send(userId='me', body=email_body).execute()
-        logging.info(f'Email Sent (ID: {email_service_response["id"]})')
+        logger.info(f'Email Sent (ID: {email_service_response["id"]})')
 
     except GoogleAPIError as error:
-        logging.warning(f'An error occurred while sending an email: {error}')
+        logger.warning(f'An error occurred while sending an email: {error}')
 
 
 def create_email_data(
