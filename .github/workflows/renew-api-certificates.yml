@@ -9,7 +9,7 @@ jobs:
     name: Renew API Certificates
     runs-on: ubuntu-latest
     steps:
-      - name: Invoke the certbot container as a one-off command.
+      - name: Invoke the certbot container as a one-off command, then restart Nginx.
         uses: appleboy/ssh-action@master
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -18,3 +18,4 @@ jobs:
           script: |
             cd ~/portfolio
             docker compose run --rm certbot renew
+            docker compose restart nginx
