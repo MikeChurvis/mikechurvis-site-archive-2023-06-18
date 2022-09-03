@@ -1,51 +1,60 @@
 ---
-import SectionLayout from '@layout:SectionLayout.astro';
+import SectionLayout from "@layout:SectionLayout.astro";
 
-import TitledContainer from '@component:TitledContainer.astro';
-import LabeledIcon from '@component:LabeledIcon.astro';
-import SecureAnchor from '@component:SecureAnchor.astro';
+import TitledContainer from "@component:TitledContainer.astro";
+import LabeledIcon from "@component:LabeledIcon.astro";
+import SecureAnchor from "@component:SecureAnchor.astro";
 
 // Use of an categories array instead of skills.keys
 // guarantees a fixed presentation order.
 const skillCategories = [
-  'Frontend',
-  'Backend',
-  'Tooling',
-  'Principles',
+  "Backend",
+  "Frontend",
+  "Testing",
+  "DevOps",
+  "Languages",
 ];
 
 const skills = {
   "Frontend": [
     ["Vue", "vue-logo.png"],
-    ["TypeScript", "typescript-logo.svg"],
     ["Bootstrap", "bootstrap-logo.svg"],
-    ["Sass/SCSS", "sass-logo.png"],
-    ["ES6", "es6-logo.png"],
     ["Astro", "astro-logo.png"],
+    ["Tailwind", "tailwind-logo.png"],
+    ["Accessibility", "accessibility-logo.png"],
+    ["Mobile-First", "mobile-first-logo.png"],
   ],
   "Backend": [
     ["Django", "django-logo.png"],
-    ["Docker", "docker-logo.png"],
     ["PostgreSQL", "postgresql-logo.png"],
     ["Redis", "redis-logo.png"],
     ["Nginx", "nginx-logo.png"],
+    ["Ubuntu", "ubuntu-logo.png"],
+    ["REST API Design", "rest-architecture-logo.png"],
+  ],
+  "Testing": [
+    ["Cypress", "cypress-logo.webp"],
+    ["Pytest", "pytest-logo.svg"],
+    ["Vitest", "vitest-logo.svg"],
+    ["DevTools", "devtools-logo.svg"],
+    ["E2E Testing", "e2e-logo.png"],
+    ["TDD", "tdd-logo.png"],
+  ],
+  "DevOps": [
+    ["Docker", "docker-logo.png"],
     ["DigitalOcean", "digitalocean-logo.png"],
-  ],
-  "Tooling": [
-    ["PyCharm", "pycharm-logo.png"],
-    ["VS Code", "vs-code-logo.png"],
     ["Git", "git-logo.png"],
-    ["GitHub", "github-logo.png"],
-    ["GitHub Actions", "github-actions-logo.png"],
-    ["Bash", "bash-logo.png"],
+    ["CI/CD", "github-actions-logo.png"],
+    ["SDLC", "ci-cd-logo.png"],
+    ["12-Factor", "12-factor-logo.png"],
   ],
-  "Principles": [
-    ['Mobile-First Design', 'mobile-first-logo.png'],
-    ['Accessibility', 'accessibility-logo.png'],
-    ['Containerization', 'container-icon.png'],
-    ['Continuous Integration', 'ci-cd-logo.png'],
-    ['Search Engine Optimization', 'seo-logo.png'],
-    ['12-Factor Methodology', '12-factor-logo.png'],
+  "Languages": [
+    ["Python", "python-logo.svg"],
+    ["SQL", "sql-logo.png"],
+    ["TypeScript", "typescript-logo.svg"],
+    ["JavaScript", "es6-logo.png"],
+    ["Sass/SCSS", "sass-logo.png"],
+    ["C#", "csharp-logo.png"],
   ],
 };
 ---
@@ -61,7 +70,7 @@ const skills = {
         {skills[category].map(([skill, logo]) => (
           
           <div class="col-4 col-md py-2">
-            <LabeledIcon title={skill} iconPath={'/images/logos/' + logo} />
+            <LabeledIcon title={skill} iconPath={"/images/logos/" + logo} />
           </div>
 
         ))}
