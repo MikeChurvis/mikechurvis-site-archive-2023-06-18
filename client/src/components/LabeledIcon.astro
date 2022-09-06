@@ -5,7 +5,7 @@ const { title, iconPath } = Astro.props;
 
 <div class="labelled-icon col mt-2">
   
-  <div class="d-flex justify-content-center mb-1">
+  <div class="icon_container d-flex justify-content-center mb-1">
     <img 
       src={ iconPath /* this doesn't work yet -> (await import(iconPath)).default*/ } 
       alt={"logo for " + title} 
@@ -20,11 +20,28 @@ const { title, iconPath } = Astro.props;
 </div>
 
 <style lang="scss">
+div {
+  // outline: 1px solid purple;
+  // max-width: 4rem;
+
+  &.icon_container {
+    height: 3rem;
+    // width: 100%;
+  }
+}
+
+
 
 .labelled-icon {
   &__image {
-    max-height: 2.7rem;
-    max-width: 3rem
+    // position: relative;
+    object-fit: scale-down;
+    // top: 50%;
+    // left: 50%;
+    // height: auto;
+    // max-height: 100%;
+    // width: auto;
+    max-width: 90%
   }
 }
 </style>
