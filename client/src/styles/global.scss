@@ -5,8 +5,14 @@
 
 @each $color-name,
 $color in map-merge($theme-colors, $colors) {
-  .shadow.shadow-glow-#{$color-name} {
+  :not(img).shadow.shadow-glow-#{$color-name} {
     box-shadow: 0 0 1rem tint-color($color, 50%) !important;
+
+  }
+
+  img.shadow.shadow-glow-#{$color-name} {
+    box-shadow: none !important;
+    filter: drop-shadow(0 0 1rem tint-color($color, 50%))
   }
 }
 
@@ -20,7 +26,7 @@ html {
 
 .hero__headshot {
   // width: clamp(0px, 90%, 20rem);
-  
+
   &>img {
     object-fit: contain;
     width: 100%;
